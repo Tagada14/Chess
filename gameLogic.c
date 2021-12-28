@@ -99,10 +99,10 @@ void moveFigureToTile(int selectedTileIndex, int actionTileIndex, int legalMoveT
 
 void moveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMoveTable[], char figurePlacement[]){
     // Check if move Rooks or Kings for the first time
-    if (leftBlackRookDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'r' && selectedTileIndex == 56) leftBlackRookDidNotMove = false;
-    else if (rightBlackRookDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'r' && selectedTileIndex == 63) rightBlackRookDidNotMove = false;
-    else if (leftWhiteRookDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'R' && selectedTileIndex == 0) leftWhiteRookDidNotMove = false;
-    else if (rightWhiteRookDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'R' && selectedTileIndex == 7) rightWhiteRookDidNotMove = false;
+    if (leftBlackRookDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'r' && selectedTileIndex == 0) leftBlackRookDidNotMove = false;
+    else if (rightBlackRookDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'r' && selectedTileIndex == 7) rightBlackRookDidNotMove = false;
+    else if (leftWhiteRookDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'R' && selectedTileIndex == 56) leftWhiteRookDidNotMove = false;
+    else if (rightWhiteRookDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'R' && selectedTileIndex == 63) rightWhiteRookDidNotMove = false;
     else if (whiteKingDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'K') whiteKingDidNotMove = false;
     else if (blackKingDidNotMove && getFigureType(selectedTileIndex, figurePlacement) == 'k') blackKingDidNotMove = false;
     // Look for special movement cases
@@ -111,14 +111,14 @@ void moveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMoveTa
         if (getFigureType(selectedTileIndex, figurePlacement) == 'K') leftWhiteRookDidNotMove = false;
         else if (getFigureType(selectedTileIndex, figurePlacement) == 'k') leftBlackRookDidNotMove = false;
         moveFigureToTile(selectedTileIndex, actionTileIndex, legalMoveTable,figurePlacement); // Move the king
-        moveFigureToTile(actionTileIndex - 2, selectedTileIndex - 1, legalMoveTable, figurePlacement); // Move the rook
+        moveFigureToTile(actionTileIndex - 1, selectedTileIndex - 1, legalMoveTable, figurePlacement); // Move the rook
     }
     else if ((getFigureType(selectedTileIndex, figurePlacement) == 'K' || getFigureType(selectedTileIndex, figurePlacement) == 'k') &&
         selectedTileIndex + 2 == actionTileIndex){ // Right side castling
         if (getFigureType(selectedTileIndex, figurePlacement) == 'K') rightWhiteRookDidNotMove = false;
         else if (getFigureType(selectedTileIndex, figurePlacement) == 'k') rightBlackRookDidNotMove = false;
         moveFigureToTile(selectedTileIndex, actionTileIndex, legalMoveTable,figurePlacement); // Move the king
-        moveFigureToTile(actionTileIndex + 1, selectedTileIndex + 1, legalMoveTable, figurePlacement); // Move the rook
+        moveFigureToTile(actionTileIndex + 2, selectedTileIndex + 1, legalMoveTable, figurePlacement); // Move the rook
 
     }else if(getFigureType(selectedTileIndex, figurePlacement) == 'p' && selectedTileIndex/8 == 4 &&
         getFigureType(actionTileIndex, figurePlacement) == 'E' && lastMoveOrigin - 8  == actionTileIndex){
@@ -163,7 +163,6 @@ void pawnBlack(int selectedTileIndex, int finalLegalMoveTab[], int transitionalL
 }
 
 void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalMoveTab[], char figurePlacement[]){
-//    printf("Set Legal Moves for King\n");
     int indextransitionalLegalMoveTable = selectedTileIndex + 161 + (selectedTileIndex/8) * 14;
     transitionalLegalMoveTab[indextransitionalLegalMoveTable + 21] = 3;
     transitionalLegalMoveTab[indextransitionalLegalMoveTable + 22] = 3;
@@ -177,7 +176,6 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
     if (figurePlacement == globalFigurePlacement){
         if (getFigureSide(selectedTileIndex, figurePlacement) == 'W'){
             if (whiteKingDidNotMove){ // Check if the King has moved before
-//                printf("White Castling check\n");
                 char temporaryFigurePlacement[64];
                         for (int j = 0; j < 64; j++){
                             temporaryFigurePlacement[j] = figurePlacement[j];
@@ -187,15 +185,13 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                     // Left side castling
                     if (leftWhiteRookDidNotMove){ // Check if the rook has moved before
                         // Check if there is a Rook and the tiles between the Rook and the King are empty
-                        if (getFigureType(selectedTileIndex - 4, figurePlacement) == 'R' && getFigureType(selectedTileIndex - 3, figurePlacement) == 'E' &&
-                        getFigureType(selectedTileIndex - 2, figurePlacement) == 'E' && getFigureType(selectedTileIndex - 1, figurePlacement) == 'E'){
+                        if (getFigureType(selectedTileIndex - 3, figurePlacement) == 'R' && getFigureType(selectedTileIndex - 2, figurePlacement) == 'E' &&
+                             getFigureType(selectedTileIndex - 1, figurePlacement) == 'E'){
                             //Check if any of the tiles are checked
                             temporaryFigurePlacement[selectedTileIndex-1] = 'K';
                             temporaryFigurePlacement[selectedTileIndex-2] = 'K';
-                            temporaryFigurePlacement[selectedTileIndex-3] = 'K';
                             CheckTiles = checkedTiles(temporaryFigurePlacement);
-                            if (CheckTiles[selectedTileIndex-1] == 0 && CheckTiles[selectedTileIndex-2] == 0 && CheckTiles[selectedTileIndex-3] == 0 &&
-                            CheckTiles[selectedTileIndex-4] == 0){
+                            if (CheckTiles[selectedTileIndex-1] == 0 && CheckTiles[selectedTileIndex-2] == 0 && CheckTiles[selectedTileIndex-3] == 0){
                                 finalLegalMoveTab[selectedTileIndex - 2] = 1;
                                 free(CheckTiles);
                             }
@@ -204,13 +200,14 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                     // Right side castling
                     if (rightWhiteRookDidNotMove){ // Check if the rooks has moved before
                         // Check if there is a Rook and the tiles between the Rook and the King are empty
-                        if (getFigureType(selectedTileIndex + 3, figurePlacement) == 'R' && getFigureType(selectedTileIndex + 1, figurePlacement) == 'E' &&
-                        getFigureType(selectedTileIndex + 2, figurePlacement) == 'E'){
+                        if (getFigureType(selectedTileIndex + 4, figurePlacement) == 'R' && getFigureType(selectedTileIndex + 1, figurePlacement) == 'E' &&
+                        getFigureType(selectedTileIndex + 2, figurePlacement) == 'E' && getFigureType(selectedTileIndex + 3, figurePlacement) == 'E'){
                             //Check if any of the tiles are checked
                             temporaryFigurePlacement[selectedTileIndex+1] = 'K';
                             temporaryFigurePlacement[selectedTileIndex+2] = 'K';
+                            temporaryFigurePlacement[selectedTileIndex+3] = 'K';
                             CheckTiles = checkedTiles(temporaryFigurePlacement);
-                            if (CheckTiles[selectedTileIndex+1] == 0 && CheckTiles[selectedTileIndex+2] == 0 && CheckTiles[selectedTileIndex+3] == 0){
+                            if (CheckTiles[selectedTileIndex+1] == 0 && CheckTiles[selectedTileIndex+2] == 0 && CheckTiles[selectedTileIndex+3] == 0 && CheckTiles[selectedTileIndex+4] == 0){
                                 finalLegalMoveTab[selectedTileIndex + 2] = 1;
                                 free(CheckTiles);
                             }
@@ -226,8 +223,8 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                     // Left side castling
                     if (leftBlackRookDidNotMove){
                         // Check if there is a Rook and the tiles between the Rook and the King are empty
-                        if (getFigureType(selectedTileIndex - 4, figurePlacement) == 'r' && getFigureType(selectedTileIndex - 3, figurePlacement) == 'E' &&
-                        getFigureType(selectedTileIndex - 2, figurePlacement) == 'E' && getFigureType(selectedTileIndex - 1, figurePlacement) == 'E'){
+                        if (getFigureType(selectedTileIndex - 3, figurePlacement) == 'r' && getFigureType(selectedTileIndex - 2, figurePlacement) == 'E' &&
+                            getFigureType(selectedTileIndex - 1, figurePlacement) == 'E'){
                             //Check if any of the tiles are checked
                             char temporaryFigurePlacement[64];
                             for (int j = 0; j < 64; j++){
@@ -235,10 +232,8 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                             }
                             temporaryFigurePlacement[selectedTileIndex-1] = 'k';
                             temporaryFigurePlacement[selectedTileIndex-2] = 'k';
-                            temporaryFigurePlacement[selectedTileIndex-3] = 'k';
                             CheckTiles = checkedTiles(temporaryFigurePlacement);
-                            if (CheckTiles[selectedTileIndex-1] == 0 && CheckTiles[selectedTileIndex-2] == 0 && CheckTiles[selectedTileIndex-3] == 0 &&
-                            CheckTiles[selectedTileIndex-4] == 0){
+                            if (CheckTiles[selectedTileIndex-1] == 0 && CheckTiles[selectedTileIndex-2] == 0 && CheckTiles[selectedTileIndex-3] == 0){
                                 finalLegalMoveTab[selectedTileIndex - 2] = 1;
                                 free(CheckTiles);
                             }
@@ -247,8 +242,8 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                     // Right side castling
                     if (rightBlackRookDidNotMove){
                         // Check if there is a Rook and the tiles between the Rook and the King are empty
-                        if (getFigureType(selectedTileIndex + 3, figurePlacement) == 'r' && getFigureType(selectedTileIndex + 1, figurePlacement) == 'E' &&
-                        getFigureType(selectedTileIndex + 2, figurePlacement) == 'E'){
+                        if (getFigureType(selectedTileIndex + 4, figurePlacement) == 'r' && getFigureType(selectedTileIndex + 1, figurePlacement) == 'E' &&
+                        getFigureType(selectedTileIndex + 2, figurePlacement) == 'E' && getFigureType(selectedTileIndex + 3, figurePlacement) == 'E'){
                             //Check if any of the tiles are checked
                             char temporaryFigurePlacement[64];
                             for (int j = 0; j < 64; j++){
@@ -256,8 +251,9 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                             }
                             temporaryFigurePlacement[selectedTileIndex+1] = 'k';
                             temporaryFigurePlacement[selectedTileIndex+2] = 'k';
+                            temporaryFigurePlacement[selectedTileIndex+3] = 'k';
                             CheckTiles = checkedTiles(temporaryFigurePlacement);
-                            if (CheckTiles[selectedTileIndex+1] == 0 && CheckTiles[selectedTileIndex+2] == 0 && CheckTiles[selectedTileIndex+3] == 0){
+                            if (CheckTiles[selectedTileIndex+1] == 0 && CheckTiles[selectedTileIndex+2] == 0 && CheckTiles[selectedTileIndex+3] == 0 && CheckTiles[selectedTileIndex+4] == 0){
                                 finalLegalMoveTab[selectedTileIndex + 2] = 1;
                                 free(CheckTiles);
                             }
