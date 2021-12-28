@@ -11,18 +11,18 @@ void drawBoard (GtkWidget* grid){
     for (int i = 0; i < 64; i++){
         GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(grid), tabGrid[i].posX, tabGrid[i].posY);
         GtkWidget* image = NULL;
-        if (globalFigurePlacement[i] == 'P') image = gtk_image_new_from_file ("Chess_plt60.png");
-        else if (globalFigurePlacement[i] == 'p') image = gtk_image_new_from_file ("Chess_pdt60.png");
-        else if (globalFigurePlacement[i] == 'S') image = gtk_image_new_from_file ("Chess_nlt60.png");
-        else if (globalFigurePlacement[i] == 's') image = gtk_image_new_from_file ("Chess_ndt60.png");
-        else if (globalFigurePlacement[i] == 'B') image = gtk_image_new_from_file ("Chess_blt60.png");
-        else if (globalFigurePlacement[i] == 'b') image = gtk_image_new_from_file ("Chess_bdt60.png");
-        else if (globalFigurePlacement[i] == 'R') image = gtk_image_new_from_file("Chess_rlt60.png");
-        else if (globalFigurePlacement[i] == 'r') image = gtk_image_new_from_file("Chess_rdt60.png");
-        else if (globalFigurePlacement[i] == 'Q') image = gtk_image_new_from_file("Chess_qlt60.png");
-        else if (globalFigurePlacement[i] == 'q') image = gtk_image_new_from_file("Chess_qdt60.png");
-        else if (globalFigurePlacement[i] == 'K') image = gtk_image_new_from_file("Chess_klt60.png");
-        else if (globalFigurePlacement[i] == 'k') image = gtk_image_new_from_file("Chess_kdt60.png");
+        if (globalFigurePlacement[i] == 'P') image = gtk_image_new_from_file ("icons//Chess_plt60.png");
+        else if (globalFigurePlacement[i] == 'p') image = gtk_image_new_from_file ("icons//Chess_pdt60.png");
+        else if (globalFigurePlacement[i] == 'S') image = gtk_image_new_from_file ("icons//Chess_nlt60.png");
+        else if (globalFigurePlacement[i] == 's') image = gtk_image_new_from_file ("icons//Chess_ndt60.png");
+        else if (globalFigurePlacement[i] == 'B') image = gtk_image_new_from_file ("icons//Chess_blt60.png");
+        else if (globalFigurePlacement[i] == 'b') image = gtk_image_new_from_file ("icons//Chess_bdt60.png");
+        else if (globalFigurePlacement[i] == 'R') image = gtk_image_new_from_file("icons//Chess_rlt60.png");
+        else if (globalFigurePlacement[i] == 'r') image = gtk_image_new_from_file("icons//Chess_rdt60.png");
+        else if (globalFigurePlacement[i] == 'Q') image = gtk_image_new_from_file("icons//Chess_qlt60.png");
+        else if (globalFigurePlacement[i] == 'q') image = gtk_image_new_from_file("icons//Chess_qdt60.png");
+        else if (globalFigurePlacement[i] == 'K') image = gtk_image_new_from_file("icons//Chess_klt60.png");
+        else if (globalFigurePlacement[i] == 'k') image = gtk_image_new_from_file("icons//Chess_kdt60.png");
         if (image != NULL) gtk_button_set_image(GTK_BUTTON(button), image);
         else gtk_button_set_image(GTK_BUTTON(button), NULL);
     }
