@@ -1,0 +1,43 @@
+window {
+    background-color: white;
+}
+
+button {
+    background-image: none;
+}
+
+#bright {
+    background-color: #F1D8B6;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+
+#dark {
+    background-color: #B68864;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+
+#legalMove{
+    background-color: green;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+
+#legalMoveKill{
+   background-color: orange;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+
+#dark:hover{
+    background-color: #C49372;
+}
+
+#bright:hover{
+    background-color: #F2DEC5;
+}
