@@ -11,9 +11,9 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
     int actionClickedTileIndex = (int)*i;
     GtkWidget* boardGrid = gtk_widget_get_parent(clickedTile);
     //Check if we need to change game state
-    resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
     if (UISelectedTile != -1){
         if (getFigureType(UISelectedTile, globalFigurePlacement) != 'E' && whoseTurn() == getFigureSide(UISelectedTile,globalFigurePlacement)){
+            resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
             setLegalMoves(UISelectedTile, globalFinalLegalMoveTab, globalTransitionalLegalMoveTab,globalFigurePlacement);
             checkMoveCheckLegality(UISelectedTile, globalFinalLegalMoveTab, globalFigurePlacement);
         }
@@ -38,10 +38,10 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
     else if ((getFigureType(UISelectedTile, globalFigurePlacement) == 'E' || whoseTurn() != getFigureSide(UISelectedTile, globalFigurePlacement)) &&
        (getFigureType(actionClickedTileIndex, globalFigurePlacement) == 'E' || whoseTurn() != getFigureSide(actionClickedTileIndex, globalFigurePlacement)))
        UISelectedTile = -1;
-    else if (getFigureType(UISelectedTile, globalFigurePlacement) != 'E' && whoseTurn() == getFigureSide(UISelectedTile, globalFigurePlacement) &&
-       globalFinalLegalMoveTab[actionClickedTileIndex] != 0)
-        UISelectedTile = -1;
     else if (UISelectedTile == actionClickedTileIndex)
+        UISelectedTile = -1;
+    else if ((getFigureSide(actionClickedTileIndex, globalFigurePlacement) != whoseTurn() || getFigureType(actionClickedTileIndex, globalFigurePlacement) == 'E') &&
+              globalFinalLegalMoveTab[actionClickedTileIndex] == 0)
         UISelectedTile = -1;
     else if (UISelectedTile != actionClickedTileIndex && getFigureType(actionClickedTileIndex, globalFigurePlacement) != 'E' &&
              getFigureSide(actionClickedTileIndex, globalFigurePlacement) == whoseTurn()){
