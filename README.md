@@ -1,3 +1,5 @@
 # Chess
 Simple Chess GUI wrote in C using GTK library
-Authors: @Tagada14 , @zielinsky
+##Authors
+- [Jan Buszka](https://github.com/Tagada14)
+- [Patryk Zieliński](https://github.com/zielinsky)
