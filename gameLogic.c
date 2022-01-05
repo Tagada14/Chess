@@ -1,9 +1,4 @@
 #include "chess.h"
-#include <string.h>
-#include <gtk/gtk.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 
 // UI state
 int UISelectedTile = -1;
@@ -193,8 +188,8 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                             CheckTiles = checkedTiles(temporaryFigurePlacement);
                             if (CheckTiles[selectedTileIndex-1] == 0 && CheckTiles[selectedTileIndex-2] == 0 && CheckTiles[selectedTileIndex-3] == 0){
                                 finalLegalMoveTab[selectedTileIndex - 2] = 1;
-                                free(CheckTiles);
                             }
+                            free(CheckTiles);
                         }
                     }
                     // Right side castling
@@ -209,8 +204,8 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                             CheckTiles = checkedTiles(temporaryFigurePlacement);
                             if (CheckTiles[selectedTileIndex+1] == 0 && CheckTiles[selectedTileIndex+2] == 0 && CheckTiles[selectedTileIndex+3] == 0 && CheckTiles[selectedTileIndex+4] == 0){
                                 finalLegalMoveTab[selectedTileIndex + 2] = 1;
-                                free(CheckTiles);
                             }
+                            free(CheckTiles);
                         }
                     }
                 }
@@ -235,8 +230,8 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                             CheckTiles = checkedTiles(temporaryFigurePlacement);
                             if (CheckTiles[selectedTileIndex-1] == 0 && CheckTiles[selectedTileIndex-2] == 0 && CheckTiles[selectedTileIndex-3] == 0){
                                 finalLegalMoveTab[selectedTileIndex - 2] = 1;
-                                free(CheckTiles);
                             }
+                            free(CheckTiles);
                         }
                     }
                     // Right side castling
@@ -255,8 +250,8 @@ void king(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalM
                             CheckTiles = checkedTiles(temporaryFigurePlacement);
                             if (CheckTiles[selectedTileIndex+1] == 0 && CheckTiles[selectedTileIndex+2] == 0 && CheckTiles[selectedTileIndex+3] == 0 && CheckTiles[selectedTileIndex+4] == 0){
                                 finalLegalMoveTab[selectedTileIndex + 2] = 1;
-                                free(CheckTiles);
                             }
+                            free(CheckTiles);
                         }
                     }
                 }
@@ -454,6 +449,7 @@ int* checkedTiles(char figurePlacement[]){
         if (checkedTilesTable[i] >= 1) checkedTilesTable[i] = 1; // 1 means the tile is attacked
         else checkedTilesTable[i] = 0; // 0 means the tile isn't attacked
     }
+    free(funcionTemporaryLegalMoveTable);
     return checkedTilesTable;
 }
 
