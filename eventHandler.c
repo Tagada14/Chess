@@ -1,9 +1,4 @@
 #include "chess.h"
-#include <string.h>
-#include <gtk/gtk.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
 
 void eventHandler(GtkWidget* clickedTile, gpointer data){
     if (gameOver) return;
