@@ -1,3 +1,6 @@
+#ifndef _CHESS
+#define _CHESS
+
 #include <string.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
@@ -44,3 +47,5 @@ void checkMoveCheckLegality(int selectedTileIndex, int finalLegalMoveTab[], char
 int* checkedTiles(char figurePlacement[]);
 void isGameOver();
 void moveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMoveTable[], char figurePlacement[]);
+
+#endif  //_CHESS
