@@ -54,7 +54,7 @@ GtkWidget *button;
 for(int i = 0; i < 64; i++) {
     tabGrid[i].index = i;
     button = gtk_button_new();
-    gtk_widget_set_size_request(button, 150, 150);
+    gtk_widget_set_size_request(button, 100, 100);
     gtk_button_set_always_show_image(GTK_BUTTON(button),TRUE);
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(eventHandler), (gpointer) &tabGrid[i].index);
     gtk_grid_attach(GTK_GRID(grid), button, tabGrid[i].posX, tabGrid[i].posY, tabGrid[i].lenX, tabGrid[i].lenY);
