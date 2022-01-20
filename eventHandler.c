@@ -48,3 +48,18 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
     //Draw the UI
     drawUI(boardGrid);
 }
+
+void menuHandler (GtkWidget* menuButton, gpointer data){
+    gint* i = (gint*)data;
+    int menuTileIndex = (int)*i;
+//    GtkWidget* menuGrid = gtk_widget_get_parent(menuButton);
+    if (menuTileIndex == 0 || menuTileIndex == 1){
+        gtk_widget_hide(menuWindow);
+        gtk_widget_show_all(SingleplayerGameWindow);
+    }
+    else if (menuTileIndex == 3){
+        gtk_widget_hide(menuWindow);
+        gtk_widget_show_all(creditsWindow);
+    }
+
+}
