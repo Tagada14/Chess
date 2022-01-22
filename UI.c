@@ -1,6 +1,7 @@
 #include "chess.h"
 
 struct GTKmainGrid tabGrid[64];
+struct GTKmenuGrid menuGrid[4];
 
 void drawBoard (GtkWidget* grid){
     for (int i = 0; i < 64; i++){

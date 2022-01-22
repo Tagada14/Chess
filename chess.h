@@ -10,7 +10,12 @@
 struct GTKmainGrid {
 int posX,lenX,posY,lenY,index;
 };
+struct GTKmenuGrid {
+int posX,lenX,posY,lenY,index;
+char name[10];
+};
 extern struct GTKmainGrid tabGrid[];
+extern struct GTKmenuGrid menuGrid[];
 extern int roundCounter;
 extern GtkWidget* label;
 extern int UISelectedTile;
@@ -25,6 +30,9 @@ extern bool leftBlackRookDidNotMove;
 extern bool rightBlackRookDidNotMove;
 extern bool leftWhiteRookDidNotMove;
 extern bool rightWhiteRookDidNotMove;
+extern GtkWidget* SingleplayerGameWindow;
+extern GtkWidget* menuWindow;
+extern GtkWidget* creditsWindow;
 
 
 void eventHandler(GtkWidget* clickedTile, gpointer data);
@@ -47,5 +55,6 @@ void checkMoveCheckLegality(int selectedTileIndex, int finalLegalMoveTab[], char
 int* checkedTiles(char figurePlacement[]);
 void isGameOver();
 void moveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMoveTable[], char figurePlacement[]);
+void menuHandler();
 
 #endif  //_CHESS

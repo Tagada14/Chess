@@ -1,9 +1,11 @@
 window {
     background-color: white;
+    color: black;
 }
 
 button {
     background-image: none;
+    color: black;
 }
 
 #bright {
@@ -28,10 +30,17 @@ button {
 }
 
 #legalMoveKill{
-   background-color: orange;
+    background-color: orange;
     border-style: solid;
     border-color: black;
     border-width: 2px;
+}
+
+#menuButton{
+    background-color: #daeddf;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
 }
 
 #dark:hover{
