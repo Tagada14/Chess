@@ -523,8 +523,6 @@ void loadConfiguration(){
 
 void saveConfigurationToFile(){
     FILE *file  = fopen("C:\\Users\\jan\\Documents\\GitHub\\Chess\\configurationSave.txt", "w");
-//    fprintf(stdout, "cos");
-//    fprintf(file, "cos");
      if (file == NULL){
         printf("Error! Could not open file\n");
         exit(-1);
@@ -540,8 +538,6 @@ void saveConfigurationToFile(){
 
 void loadConfigurationFromFile(){
         FILE *file  = fopen("C:\\Users\\jan\\Documents\\GitHub\\Chess\\configurationSave.txt", "r");
-//    fprintf(stdout, "cos");
-//    fprintf(file, "cos");
      if (file == NULL){
         printf("Error! Could not open file\n");
         exit(-1);
