@@ -30,8 +30,8 @@ void resetBoardColors(GtkWidget* grid){
         if (j % 8 == 0) l++;
         l++;
         GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(grid), tabGrid[j].posX, tabGrid[j].posY);
-        if (l % 2 == 0) gtk_widget_set_name(button, "dark");
-        else gtk_widget_set_name(button, "bright");
+        if (l % 2 == 0) gtk_widget_set_name(button, "bright");
+        else gtk_widget_set_name(button, "dark");
     }
 }
 
