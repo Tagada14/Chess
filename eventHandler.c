@@ -62,11 +62,20 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(creditsWindow);
     }
-
 }
 
 void reverseLastMove(GtkWidget* menuButton, gpointer data){
     loadConfiguration();
     resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
     drawUI(chessBoardGrid);
+}
+
+void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data){
+    loadConfigurationFromFile();
+    resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
+    drawUI(chessBoardGrid);
+}
+
+void saveBoardConfigurationToFile(GtkWidget* menuButton, gpointer data){
+    saveConfigurationToFile();
 }

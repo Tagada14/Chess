@@ -520,3 +520,41 @@ void loadConfiguration(){
        globalFigurePlacement[i] = lastTurnBoardConfiguration.figurePlacement[i];
     }
 }
+
+void saveConfigurationToFile(){
+    FILE *file  = fopen("C:\\Users\\jan\\Documents\\GitHub\\Chess\\configurationSave.txt", "w");
+//    fprintf(stdout, "cos");
+//    fprintf(file, "cos");
+     if (file == NULL){
+        printf("Error! Could not open file\n");
+        exit(-1);
+    }
+    fprintf(file, "%d %d %d %d %d %d\n",leftBlackRookDidNotMove, rightBlackRookDidNotMove, leftWhiteRookDidNotMove, rightWhiteRookDidNotMove, blackKingDidNotMove, whiteKingDidNotMove);
+    fprintf(file, "%d %d\n", roundCounter, lastMoveOrigin);
+    for(int i = 0; i < 64; i++){
+        putc(globalFigurePlacement[i], file);
+        if ((i+1)%8 == 0) putc('\n', file);
+    }
+    int fclose(FILE *file);
+}
+
+void loadConfigurationFromFile(){
+        FILE *file  = fopen("C:\\Users\\jan\\Documents\\GitHub\\Chess\\configurationSave.txt", "r");
+//    fprintf(stdout, "cos");
+//    fprintf(file, "cos");
+     if (file == NULL){
+        printf("Error! Could not open file\n");
+        exit(-1);
+    }
+    int temp1,temp2,temp3,temp4,temp5,temp6;
+    fscanf(file, "%d %d %d %d %d %d\n", &temp1, &temp2, &temp3, &temp4, &temp5, &temp6);
+    leftBlackRookDidNotMove = temp1; rightBlackRookDidNotMove = temp2; leftWhiteRookDidNotMove = temp3; rightWhiteRookDidNotMove = temp4;
+    blackKingDidNotMove = temp5; whiteKingDidNotMove = temp6;
+    fscanf(file, "%d %d\n", &temp1, &temp2);
+    roundCounter = temp1; lastMoveOrigin = temp2;
+    for(int i = 0; i < 64; i++){
+        globalFigurePlacement[i] = getc(file);
+        if ((i+1)%8 == 0) getc(file);
+    }
+    int fclose(FILE *file);
+}

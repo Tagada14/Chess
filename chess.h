@@ -73,5 +73,9 @@ void menuHandler();
 void saveCurrentConfiguration();
 void loadConfiguration();
 void reverseLastMove(GtkWidget* menuButton, gpointer data);
+void saveConfigurationToFile();
+void loadConfigurationFromFile();
+void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data);
+void saveBoardConfigurationToFile(GtkWidget* menuButton, gpointer data);
 
 #endif  //_CHESS
