@@ -4,6 +4,7 @@ GtkWidget* label;
 GtkWidget* menuWindow;
 GtkWidget* SingleplayerGameWindow;
 GtkWidget* creditsWindow;
+GtkWidget* chessBoardGrid;
 
 static void exitWithButton( GtkWidget *widget, gpointer data) {
     gtk_main_quit();
@@ -94,14 +95,14 @@ label = gtk_label_new("White's Turn");
 gtk_box_pack_start(GTK_BOX(box3), label, FALSE, FALSE, 0);
 
 
-GtkWidget *grid = gtk_grid_new();
+chessBoardGrid = gtk_grid_new();
 
-gtk_grid_set_row_spacing(GTK_GRID(grid), 0);
-gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-gtk_grid_set_column_spacing(GTK_GRID(grid), 0);
-gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+gtk_grid_set_row_spacing(GTK_GRID(chessBoardGrid), 0);
+gtk_grid_set_row_homogeneous(GTK_GRID(chessBoardGrid), TRUE);
+gtk_grid_set_column_spacing(GTK_GRID(chessBoardGrid), 0);
+gtk_grid_set_column_homogeneous(GTK_GRID(chessBoardGrid), TRUE);
 
-gtk_box_pack_start(GTK_BOX(box1), grid, TRUE, TRUE, 0);
+gtk_box_pack_start(GTK_BOX(box1), chessBoardGrid, TRUE, TRUE, 0);
 
 GtkWidget *button;
 for(int i = 0; i < 64; i++) {
@@ -110,14 +111,19 @@ for(int i = 0; i < 64; i++) {
     gtk_widget_set_size_request(button, 100, 100);
     gtk_button_set_always_show_image(GTK_BUTTON(button),TRUE);
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(eventHandler), (gpointer) &tabGrid[i].index);
-    gtk_grid_attach(GTK_GRID(grid), button, tabGrid[i].posX, tabGrid[i].posY, tabGrid[i].lenX, tabGrid[i].lenY);
+    gtk_grid_attach(GTK_GRID(chessBoardGrid), button, tabGrid[i].posX, tabGrid[i].posY, tabGrid[i].lenX, tabGrid[i].lenY);
 }
-drawBoard(grid);
-resetBoardColors(grid);
+drawBoard(chessBoardGrid);
+resetBoardColors(chessBoardGrid);
 GtkWidget *box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
 button = gtk_button_new_with_label("Quit");
 g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(exitWithButton), NULL);
+
+gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
+
+button = gtk_button_new_with_label("Undo move");
+g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(reverseLastMove), NULL);
 
 
 gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);

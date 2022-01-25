@@ -14,6 +14,7 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
         }
         if (getFigureType(UISelectedTile, globalFigurePlacement) != 'E' && whoseTurn() == getFigureSide(UISelectedTile, globalFigurePlacement) &&
            globalFinalLegalMoveTab[actionClickedTileIndex] != 0){
+            saveCurrentConfiguration();
             moveFigureLogic(UISelectedTile, actionClickedTileIndex, globalFinalLegalMoveTab, globalFigurePlacement);
             lastMoveOrigin = UISelectedTile;
             roundCounter++;
@@ -62,4 +63,10 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
         gtk_widget_show_all(creditsWindow);
     }
 
+}
+
+void reverseLastMove(GtkWidget* menuButton, gpointer data){
+    loadConfiguration();
+    resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
+    drawUI(chessBoardGrid);
 }

@@ -15,9 +15,11 @@ bool rightBlackRookDidNotMove = true;
 bool leftWhiteRookDidNotMove = true;
 bool rightWhiteRookDidNotMove = true;
 
+
 int globalTransitionalLegalMoveTab[484]; // actual 8x8 table is from 160 to 224
 int globalFinalLegalMoveTab[64];
 
+struct boardConfiguration lastTurnBoardConfiguration;
 // PAWN -> P, BISHOP-> B, ROOK -> R, KNIGHT -> S, QUEEN -> Q, KING -> K
 // small letter -> BLACK, capital letter -> WHITE, E -> none
 void startingLayout(){
@@ -486,5 +488,35 @@ void isGameOver(){
     else if (!flagCheck && !flagMoves){
         printf("Game Over\n");
         printf("It's a tie!\n");
+    }
+}
+
+void saveCurrentConfiguration(){
+    lastTurnBoardConfiguration.gameOver = gameOver;
+    lastTurnBoardConfiguration.leftBlackRookDidNotMove = leftBlackRookDidNotMove;
+    lastTurnBoardConfiguration.leftWhiteRookDidNotMove = leftWhiteRookDidNotMove;
+    lastTurnBoardConfiguration.rightBlackRookDidNotMove = rightBlackRookDidNotMove;
+    lastTurnBoardConfiguration.rightWhiteRookDidNotMove = rightWhiteRookDidNotMove;
+    lastTurnBoardConfiguration.blackKingDidNotMove = blackKingDidNotMove;
+    lastTurnBoardConfiguration.whiteKingDidNotMove = whiteKingDidNotMove;
+    lastTurnBoardConfiguration.roundCounter = roundCounter;
+    lastTurnBoardConfiguration.lastMoveOrigin = lastMoveOrigin;
+    for (int i = 0; i < 64; i++){
+        lastTurnBoardConfiguration.figurePlacement[i] = globalFigurePlacement[i];
+    }
+}
+
+void loadConfiguration(){
+    gameOver = lastTurnBoardConfiguration.gameOver;
+    leftBlackRookDidNotMove = lastTurnBoardConfiguration.leftBlackRookDidNotMove ;
+    leftWhiteRookDidNotMove = lastTurnBoardConfiguration.leftWhiteRookDidNotMove;
+    rightBlackRookDidNotMove = lastTurnBoardConfiguration.rightBlackRookDidNotMove;
+    rightWhiteRookDidNotMove = lastTurnBoardConfiguration.rightWhiteRookDidNotMove;
+    blackKingDidNotMove = lastTurnBoardConfiguration.blackKingDidNotMove;
+    whiteKingDidNotMove = lastTurnBoardConfiguration.whiteKingDidNotMove;
+    roundCounter = lastTurnBoardConfiguration.roundCounter;
+    lastMoveOrigin = lastTurnBoardConfiguration.lastMoveOrigin;
+    for (int i = 0; i < 64; i++){
+       globalFigurePlacement[i] = lastTurnBoardConfiguration.figurePlacement[i];
     }
 }
