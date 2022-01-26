@@ -1,0 +1,7 @@
+
+bin/Debug/Chess.exe
+*.cbp
+*.depend
+*.layout
+*.o
+*.txt
