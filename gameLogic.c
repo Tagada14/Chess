@@ -538,12 +538,13 @@ void saveConfigurationToFile(){
         putc(globalFigurePlacement[i], file);
         if ((i+1)%8 == 0) putc('\n', file);
     }
+    fflush(file);
     free(fileName);
     int fclose(FILE *file);
 }
 
 void loadConfigurationFromFile(char* filename){
-        FILE *file  = fopen((char*)filename, "r");
+        FILE *file  = fopen(filename, "r");
      if (file == NULL){
         printf("Error! Could not open file\n");
         exit(-1);
