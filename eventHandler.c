@@ -71,7 +71,13 @@ void reverseLastMove(GtkWidget* menuButton, gpointer data){
 }
 
 void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data){
-    loadConfigurationFromFile();
+    GtkWidget * dialog;
+    dialog = gtk_file_chooser_dialog_new("Choose a file", GTK_WINDOW(SingleplayerGameWindow),GTK_FILE_CHOOSER_ACTION_OPEN, GTK_STOCK_OK, GTK_RESPONSE_OK, GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,NULL);
+    gtk_widget_show(dialog);
+    gint resp = gtk_dialog_run(GTK_DIALOG(dialog));
+    if(resp==GTK_RESPONSE_OK)
+        loadConfigurationFromFile(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
+    gtk_widget_destroy(dialog);
     resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
     drawUI(chessBoardGrid);
 }
