@@ -525,7 +525,7 @@ void saveConfigurationToFile(){
     char* fileName = malloc(sizeof(char)*28);
     time_t secs = time(0);
     struct tm *local = localtime(&secs);
-    sprintf(fileName, "save%02d-%02d-%d_%02d_%02d_%02d.txt",local->tm_mday,local->tm_mon +1, local->tm_year+1900, local->tm_hour, local->tm_min, local->tm_sec);
+    sprintf(fileName, "save%02d-%02d-%d_%02d_%02d_%02d.chess",local->tm_mday,local->tm_mon +1, local->tm_year+1900, local->tm_hour, local->tm_min, local->tm_sec);
     printf("%s\n", fileName);
     FILE *file  = fopen(fileName, "w");
      if (file == NULL){
