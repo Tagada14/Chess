@@ -4,6 +4,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
+#include <time.h>
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -14,6 +15,7 @@ struct GTKmenuGrid {
 int posX,lenX,posY,lenY,index;
 char name[10];
 };
+
 struct boardConfiguration {
 char figurePlacement[64];
 int roundCounter;

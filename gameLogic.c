@@ -522,7 +522,12 @@ void loadConfiguration(){
 }
 
 void saveConfigurationToFile(){
-    FILE *file  = fopen("C:\\Users\\jan\\Documents\\GitHub\\Chess\\configurationSave.txt", "w");
+    char* fileName = malloc(sizeof(char)*28);
+    time_t secs = time(0);
+    struct tm *local = localtime(&secs);
+    sprintf(fileName, "save%02d-%02d-%d_%02d_%02d_%02d.txt",local->tm_mday,local->tm_mon +1, local->tm_year+1900, local->tm_hour, local->tm_min, local->tm_sec);
+    printf("%s\n", fileName);
+    FILE *file  = fopen(fileName, "w");
      if (file == NULL){
         printf("Error! Could not open file\n");
         exit(-1);
@@ -533,11 +538,12 @@ void saveConfigurationToFile(){
         putc(globalFigurePlacement[i], file);
         if ((i+1)%8 == 0) putc('\n', file);
     }
+    free(fileName);
     int fclose(FILE *file);
 }
 
-void loadConfigurationFromFile(){
-        FILE *file  = fopen("C:\\Users\\jan\\Documents\\GitHub\\Chess\\configurationSave.txt", "r");
+void loadConfigurationFromFile(char* filename){
+        FILE *file  = fopen((char*)filename, "r");
      if (file == NULL){
         printf("Error! Could not open file\n");
         exit(-1);
