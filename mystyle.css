@@ -36,6 +36,13 @@ button {
     border-width: 2px;
 }
 
+#tileVisited{
+    background-color: red;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+
 #menuButton{
     background-color: #daeddf;
     border-style: solid;

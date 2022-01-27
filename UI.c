@@ -3,22 +3,22 @@
 struct GTKmainGrid tabGrid[64];
 struct GTKmenuGrid menuGrid[4];
 
-void drawBoard (GtkWidget* grid){
+void drawBoard (GtkWidget* grid, char figurePlacement[]){
     for (int i = 0; i < 64; i++){
         GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(grid), tabGrid[i].posX, tabGrid[i].posY);
         GtkWidget* image = NULL;
-        if (globalFigurePlacement[i] == 'P') image = gtk_image_new_from_file ("icons//Chess_plt60.png");
-        else if (globalFigurePlacement[i] == 'p') image = gtk_image_new_from_file ("icons//Chess_pdt60.png");
-        else if (globalFigurePlacement[i] == 'S') image = gtk_image_new_from_file ("icons//Chess_nlt60.png");
-        else if (globalFigurePlacement[i] == 's') image = gtk_image_new_from_file ("icons//Chess_ndt60.png");
-        else if (globalFigurePlacement[i] == 'B') image = gtk_image_new_from_file ("icons//Chess_blt60.png");
-        else if (globalFigurePlacement[i] == 'b') image = gtk_image_new_from_file ("icons//Chess_bdt60.png");
-        else if (globalFigurePlacement[i] == 'R') image = gtk_image_new_from_file("icons//Chess_rlt60.png");
-        else if (globalFigurePlacement[i] == 'r') image = gtk_image_new_from_file("icons//Chess_rdt60.png");
-        else if (globalFigurePlacement[i] == 'Q') image = gtk_image_new_from_file("icons//Chess_qlt60.png");
-        else if (globalFigurePlacement[i] == 'q') image = gtk_image_new_from_file("icons//Chess_qdt60.png");
-        else if (globalFigurePlacement[i] == 'K') image = gtk_image_new_from_file("icons//Chess_klt60.png");
-        else if (globalFigurePlacement[i] == 'k') image = gtk_image_new_from_file("icons//Chess_kdt60.png");
+        if (figurePlacement[i] == 'P') image = gtk_image_new_from_file ("icons//Chess_plt60.png");
+        else if (figurePlacement[i] == 'p') image = gtk_image_new_from_file ("icons//Chess_pdt60.png");
+        else if (figurePlacement[i] == 'S') image = gtk_image_new_from_file ("icons//Chess_nlt60.png");
+        else if (figurePlacement[i] == 's') image = gtk_image_new_from_file ("icons//Chess_ndt60.png");
+        else if (figurePlacement[i] == 'B') image = gtk_image_new_from_file ("icons//Chess_blt60.png");
+        else if (figurePlacement[i] == 'b') image = gtk_image_new_from_file ("icons//Chess_bdt60.png");
+        else if (figurePlacement[i] == 'R') image = gtk_image_new_from_file("icons//Chess_rlt60.png");
+        else if (figurePlacement[i] == 'r') image = gtk_image_new_from_file("icons//Chess_rdt60.png");
+        else if (figurePlacement[i] == 'Q') image = gtk_image_new_from_file("icons//Chess_qlt60.png");
+        else if (figurePlacement[i] == 'q') image = gtk_image_new_from_file("icons//Chess_qdt60.png");
+        else if (figurePlacement[i] == 'K') image = gtk_image_new_from_file("icons//Chess_klt60.png");
+        else if (figurePlacement[i] == 'k') image = gtk_image_new_from_file("icons//Chess_kdt60.png");
         if (image != NULL) gtk_button_set_image(GTK_BUTTON(button), image);
         else gtk_button_set_image(GTK_BUTTON(button), NULL);
     }
@@ -35,13 +35,13 @@ void resetBoardColors(GtkWidget* grid){
     }
 }
 
-void drawLegalMoves(GtkWidget* boardGrid){
+void drawLegalMoves(GtkWidget* boardGrid, int legalMoveTab[]){
     for (int i = 0; i < 64; i++){
         GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(boardGrid), tabGrid[i].posX, tabGrid[i].posY);
-        if(globalFinalLegalMoveTab[i] == 1){
+        if(legalMoveTab[i] == 1){
             gtk_widget_set_name(button, "legalMove");
         }
-        else if (globalFinalLegalMoveTab[i] == 2){
+        else if (legalMoveTab[i] == 2){
             gtk_widget_set_name(button, "legalMoveKill");
         }
     }
@@ -69,11 +69,28 @@ void changeTurnLabel(GtkWidget* label){
     else gtk_label_set_text(GTK_LABEL(label), "White's Turn");
 }
 
-void drawUI(GtkWidget* grid){
-    drawBoard(grid);
+void KGdrawVisitedTiles(GtkWidget* grid, char figurePlacement[]){
+    for (int i = 0; i < 64; i++){
+        GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(grid), tabGrid[i].posX, tabGrid[i].posY);
+        if (figurePlacement[i] == 'X')
+            gtk_widget_set_name(button, "tileVisited");
+    }
+}
+
+void drawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){
+    drawBoard(grid, figurePlacement);
     resetBoardColors(grid);
     changeTurnLabel(label);
     if (UISelectedTile != -1){
-        drawLegalMoves(grid);
+        drawLegalMoves(grid, legalMoveTab);
+    }
+}
+
+void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){
+    drawBoard(grid, figurePlacement);
+    resetBoardColors(grid);
+    KGdrawVisitedTiles(grid, figurePlacement);
+    if (KGUISelectedTile != -1){
+        drawLegalMoves(grid, legalMoveTab);
     }
 }

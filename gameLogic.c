@@ -22,7 +22,7 @@ int globalFinalLegalMoveTab[64];
 struct boardConfiguration lastTurnBoardConfiguration;
 // PAWN -> P, BISHOP-> B, ROOK -> R, KNIGHT -> S, QUEEN -> Q, KING -> K
 // small letter -> BLACK, capital letter -> WHITE, E -> none
-void startingLayout(){
+void startingChessLayout(){
     for (int i = 16; i < 48; i++){
         globalFigurePlacement[i] = 'E'; // E - Empty
     }

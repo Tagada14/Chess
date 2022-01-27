@@ -5,6 +5,8 @@ GtkWidget* menuWindow;
 GtkWidget* SingleplayerGameWindow;
 GtkWidget* creditsWindow;
 GtkWidget* chessBoardGrid;
+GtkWidget* knightGameChessBoardGrid;
+GtkWidget* knightGameWindow;
 
 static void exitWithButton( GtkWidget *widget, gpointer data) {
     gtk_main_quit();
@@ -31,10 +33,10 @@ for (int i = 0; i < 4; i++){
 //char* names = (char*)malloc(sizeof(char)*20);
 //strcpy(names, "Singleplayer");
 strcpy(menuGrid[0].name, "Singleplayer");
-strcpy(menuGrid[1].name, "Multiplayer");
+strcpy(menuGrid[1].name, "Knight Minigame");
 strcpy(menuGrid[2].name, "Options");
 strcpy(menuGrid[3].name, "Credits");
-startingLayout();
+
 
 menuWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 gtk_window_set_title(GTK_WINDOW(menuWindow),"GTK - Menu");
@@ -57,6 +59,13 @@ creditsWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 gtk_window_set_title(GTK_WINDOW(creditsWindow),"GTK - Credits");
 gtk_window_set_position(GTK_WINDOW(creditsWindow),GTK_WIN_POS_CENTER);
 gtk_container_set_border_width(GTK_CONTAINER(creditsWindow), 30);
+
+knightGameWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+gtk_window_set_title(GTK_WINDOW(knightGameWindow),"GTK - Knight Minigame");
+gtk_window_set_position(GTK_WINDOW(knightGameWindow),GTK_WIN_POS_CENTER);
+gtk_container_set_border_width(GTK_CONTAINER(knightGameWindow), 10);
+
+g_signal_connect(G_OBJECT(knightGameWindow), "destroy",G_CALLBACK(gtk_main_quit), NULL);
 
 label = gtk_label_new("Made by Patryk Zielinski & Jan Buszka");
 gtk_container_add(GTK_CONTAINER(creditsWindow), label);
@@ -113,8 +122,7 @@ for(int i = 0; i < 64; i++) {
     g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(eventHandler), (gpointer) &tabGrid[i].index);
     gtk_grid_attach(GTK_GRID(chessBoardGrid), button, tabGrid[i].posX, tabGrid[i].posY, tabGrid[i].lenX, tabGrid[i].lenY);
 }
-drawBoard(chessBoardGrid);
-resetBoardColors(chessBoardGrid);
+
 GtkWidget *box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
 button = gtk_button_new_with_label("Quit");
@@ -135,6 +143,18 @@ gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
 
 gtk_box_pack_start(GTK_BOX(box1), box2, FALSE, FALSE, 0);
 
+GtkWidget* knightGameBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+gtk_container_add(GTK_CONTAINER(knightGameWindow), knightGameBox);
+knightGameChessBoardGrid = gtk_grid_new();
+for(int i = 0; i < 64; i++) {
+    tabGrid[i].index = i;
+    button = gtk_button_new();
+    gtk_widget_set_size_request(button, 100, 100);
+    gtk_button_set_always_show_image(GTK_BUTTON(button),TRUE);
+    g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(knightGameEventHandler), (gpointer) &tabGrid[i].index);
+    gtk_grid_attach(GTK_GRID(knightGameChessBoardGrid), button, tabGrid[i].posX, tabGrid[i].posY, tabGrid[i].lenX, tabGrid[i].lenY);
+}
+gtk_box_pack_start(GTK_BOX(knightGameBox), knightGameChessBoardGrid, TRUE, TRUE, 0);
 
 
 gtk_widget_show_all(menuWindow);

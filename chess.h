@@ -13,7 +13,7 @@ int posX,lenX,posY,lenY,index;
 };
 struct GTKmenuGrid {
 int posX,lenX,posY,lenY,index;
-char name[10];
+char name[20];
 };
 
 struct boardConfiguration {
@@ -45,14 +45,23 @@ extern bool leftBlackRookDidNotMove;
 extern bool rightBlackRookDidNotMove;
 extern bool leftWhiteRookDidNotMove;
 extern bool rightWhiteRookDidNotMove;
+//Knight Mini-game
+extern char KGg_FigurePlacement[];
+extern int KGglobalTransitionalLegalMoveTab[];
+extern int KGglobalFinalLegalMoveTab[];
+extern int KGUISelectedTile;
+extern bool KGGameOver;
+
 extern GtkWidget* SingleplayerGameWindow;
 extern GtkWidget* menuWindow;
 extern GtkWidget* creditsWindow;
 extern GtkWidget* chessBoardGrid;
+extern GtkWidget* knightGameWindow;
+extern GtkWidget* knightGameChessBoardGrid;
 
 
 void eventHandler(GtkWidget* clickedTile, gpointer data);
-void startingLayout();
+void startingChessLayout();
 char whoseTurn();
 char getFigureType(int tileIndex, char figurePlacement[]);
 char getFigureSide(int tileIndex, char figurePlacement[]);
@@ -61,12 +70,12 @@ int kingIndex(char side, char figurePlacement[]);
 void resetLegalMoveTables(int transitionalLegalMoveTab[], int finalLegalMoveTab[]);
 void moveFigureToTile(int selectedTileIndex, int actionTileIndex, int legalMoveTable[], char figurePlacement[]);
 void setLegalMoves(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalMoveTab[], char figurePlacement[]);
-void drawBoard (GtkWidget* grid);
+void drawBoard (GtkWidget* grid, char figurePlacement[]);
 void resetBoardColors(GtkWidget* grid);
-void drawLegalMoves(GtkWidget* boardGrid);
+void drawLegalMoves(GtkWidget* boardGrid, int legalMoveTab[]);
 void myCSS(void);
 void changeTurnLabel(GtkWidget* label);
-void drawUI(GtkWidget* grid);
+void drawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]);
 void checkMoveCheckLegality(int selectedTileIndex, int finalLegalMoveTab[], char figurePlacement[]);
 int* checkedTiles(char figurePlacement[]);
 void isGameOver();
@@ -79,5 +88,12 @@ void saveConfigurationToFile();
 void loadConfigurationFromFile();
 void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data);
 void saveBoardConfigurationToFile(GtkWidget* menuButton, gpointer data);
-
+//Knight Mini-game
+void knightGameEventHandler (GtkWidget* menuButton, gpointer data);
+void startingKnightLayout();
+void KGSetLegalMoves (int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalMoveTab[], char figurePlacement[]);
+void KGResetLegalMoveTables(int transitionalLegalMoveTab[], int finalLegalMoveTab[]);
+void KGMoveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMoveTable[], char figurePlacement[]);
+void KGIsGameOver();
+void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]);
 #endif  //_CHESS

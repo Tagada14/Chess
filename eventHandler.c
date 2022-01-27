@@ -47,16 +47,25 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
         checkMoveCheckLegality(UISelectedTile, globalFinalLegalMoveTab, globalFigurePlacement);
     }
     //Draw the UI
-    drawUI(boardGrid);
+    drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
 }
 
 void menuHandler (GtkWidget* menuButton, gpointer data){
     gint* i = (gint*)data;
     int menuTileIndex = (int)*i;
-//    GtkWidget* menuGrid = gtk_widget_get_parent(menuButton);
-    if (menuTileIndex == 0 || menuTileIndex == 1){
+    if (menuTileIndex == 0){
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(SingleplayerGameWindow);
+        startingChessLayout();
+        resetBoardColors(chessBoardGrid);
+        drawBoard(chessBoardGrid, globalFigurePlacement);
+    }
+    else if (menuTileIndex == 1){
+        gtk_widget_hide(menuWindow);
+        gtk_widget_show_all(knightGameWindow);
+        startingKnightLayout();
+        resetBoardColors(knightGameChessBoardGrid);
+        drawBoard(knightGameChessBoardGrid, KGg_FigurePlacement);
     }
     else if (menuTileIndex == 3){
         gtk_widget_hide(menuWindow);
@@ -64,10 +73,48 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
     }
 }
 
+void knightGameEventHandler (GtkWidget* clickedTile, gpointer data){
+    if (KGGameOver) return;
+    gint* i = (gint*)data;
+    int actionClickedTileIndex = (int)*i;
+    GtkWidget* boardGrid = gtk_widget_get_parent(clickedTile);
+    //Check if we need to change game state
+    if (KGUISelectedTile != -1){
+        if (getFigureType(KGUISelectedTile, KGg_FigurePlacement) != 'E' && getFigureType(KGUISelectedTile, KGg_FigurePlacement) != 'X'){
+            KGResetLegalMoveTables(KGglobalTransitionalLegalMoveTab, KGglobalFinalLegalMoveTab);
+            KGSetLegalMoves(KGUISelectedTile, KGglobalFinalLegalMoveTab, KGglobalTransitionalLegalMoveTab, KGg_FigurePlacement);
+        }
+        if ((getFigureType(KGUISelectedTile, KGg_FigurePlacement) != 'E' && getFigureType(KGUISelectedTile, KGg_FigurePlacement) != 'X') &&
+           KGglobalFinalLegalMoveTab[actionClickedTileIndex] != 0){
+            KGMoveFigureLogic(KGUISelectedTile, actionClickedTileIndex, KGglobalFinalLegalMoveTab, KGg_FigurePlacement);
+            KGUISelectedTile = -1;
+            //Check if it's game over
+            KGResetLegalMoveTables(KGglobalTransitionalLegalMoveTab, KGglobalFinalLegalMoveTab);
+            KGIsGameOver();
+        }
+    }
+    //Change the UI state based on action
+    if (KGUISelectedTile == -1 && getFigureType(actionClickedTileIndex, KGg_FigurePlacement) != 'E' && getFigureType(actionClickedTileIndex, KGg_FigurePlacement) != 'X'){
+        KGUISelectedTile = actionClickedTileIndex;
+        KGResetLegalMoveTables(KGglobalTransitionalLegalMoveTab, KGglobalFinalLegalMoveTab);
+        KGSetLegalMoves(KGUISelectedTile, KGglobalFinalLegalMoveTab, KGglobalTransitionalLegalMoveTab, KGg_FigurePlacement);
+    }
+    else if ((getFigureType(KGUISelectedTile, KGg_FigurePlacement) == 'E' || whoseTurn() != getFigureSide(KGUISelectedTile, KGg_FigurePlacement)) &&
+       (getFigureType(actionClickedTileIndex, KGg_FigurePlacement) == 'E' || whoseTurn() != getFigureSide(actionClickedTileIndex, KGg_FigurePlacement)))
+       KGUISelectedTile = -1;
+    else if (KGUISelectedTile == actionClickedTileIndex)
+        KGUISelectedTile = -1;
+    else if ((getFigureType(actionClickedTileIndex, KGg_FigurePlacement) == 'E' || getFigureType(actionClickedTileIndex, KGg_FigurePlacement) == 'X') &&
+              KGglobalFinalLegalMoveTab[actionClickedTileIndex] == 0)
+        KGUISelectedTile = -1;
+    //Draw the UI
+    KGdrawUI(boardGrid, KGg_FigurePlacement, KGglobalFinalLegalMoveTab);
+}
+
 void reverseLastMove(GtkWidget* menuButton, gpointer data){
     loadConfiguration();
     resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
-    drawUI(chessBoardGrid);
+    drawUI(chessBoardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
 }
 
 void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data){
@@ -79,7 +126,7 @@ void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data){
         loadConfigurationFromFile(gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog)));
     gtk_widget_destroy(dialog);
     resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
-    drawUI(chessBoardGrid);
+    drawUI(chessBoardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
 }
 
 void saveBoardConfigurationToFile(GtkWidget* menuButton, gpointer data){
