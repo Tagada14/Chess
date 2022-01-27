@@ -40,7 +40,7 @@ void KGknight(int selectedTileIndex, int transitionalLegalMoveTab[]){
 void KGSetLegalMoves (int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalMoveTab[], char figurePlacement[]){
    if (figurePlacement[selectedTileIndex] == 's' || figurePlacement[selectedTileIndex] == 'S') KGknight(selectedTileIndex, KGglobalTransitionalLegalMoveTab);
     int j = 0;
-    for (int i = 26; i < 117; i++){
+    for (int i = 26; i < 118; i++){
         if (finalLegalMoveTab[j] == 0){
             if(figurePlacement[j] == 'E'){
                 if (transitionalLegalMoveTab[i] == 1) finalLegalMoveTab[j] = 1;
@@ -58,6 +58,7 @@ void KGMoveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMove
 
 void KGIsGameOver(){
     bool isOver = true;
+    bool won = true;
     for (int i = 0; i < 64; i++){
         if (KGg_FigurePlacement[i] == 'S'){
             KGResetLegalMoveTables(KGglobalTransitionalLegalMoveTab, KGglobalFinalLegalMoveTab);
@@ -68,8 +69,17 @@ void KGIsGameOver(){
         }
     }
     KGResetLegalMoveTables(KGglobalTransitionalLegalMoveTab, KGglobalFinalLegalMoveTab);
+    for (int i = 0; i < 64; i++){
+        if (KGg_FigurePlacement[i] == 'E') won = false;
+    }
     if(isOver){
-        printf("Game Over");
-        KGGameOver = true;
+        if (won){
+            printf("Congratulations, You've won!");
+            KGGameOver = true;
+        }
+        else{
+            printf("Game Over");
+            KGGameOver = true;
+        }
     }
 }
