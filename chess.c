@@ -75,7 +75,7 @@ for(int i = 0; i < 4; i++) {
     menuGrid[i].index = i;
     button2 = gtk_button_new_with_label(menuGrid[i].name);
     gtk_widget_set_name(button2, "menuButton");
-    gtk_widget_set_size_request(button2, 300, 100);+
+    gtk_widget_set_size_request(button2, 300, 100);
     g_signal_connect(G_OBJECT(button2), "clicked", G_CALLBACK(menuHandler), (gpointer) &menuGrid[i].index);
     gtk_grid_attach(GTK_GRID(grid2), button2, menuGrid[i].posX, menuGrid[i].posY, menuGrid[i].lenX, menuGrid[i].lenY);
 }

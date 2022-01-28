@@ -68,7 +68,7 @@ int kingIndex(char side, char figurePlacement[]){
             }
         }
     }
-    printf("Error in function kingIndex\n");
+    printf("Error in kingIndex\n");
     return -1;
 }
 
@@ -519,6 +519,16 @@ void loadConfiguration(){
     for (int i = 0; i < 64; i++){
        globalFigurePlacement[i] = lastTurnBoardConfiguration.figurePlacement[i];
     }
+}
+
+void loadBools(){
+    gameOver = lastTurnBoardConfiguration.gameOver;
+    leftBlackRookDidNotMove = lastTurnBoardConfiguration.leftBlackRookDidNotMove ;
+    leftWhiteRookDidNotMove = lastTurnBoardConfiguration.leftWhiteRookDidNotMove;
+    rightBlackRookDidNotMove = lastTurnBoardConfiguration.rightBlackRookDidNotMove;
+    rightWhiteRookDidNotMove = lastTurnBoardConfiguration.rightWhiteRookDidNotMove;
+    blackKingDidNotMove = lastTurnBoardConfiguration.blackKingDidNotMove;
+    whiteKingDidNotMove = lastTurnBoardConfiguration.whiteKingDidNotMove;
 }
 
 void saveConfigurationToFile(){

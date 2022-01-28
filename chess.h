@@ -7,6 +7,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 struct GTKmainGrid {
 int posX,lenX,posY,lenY,index;
