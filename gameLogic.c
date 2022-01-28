@@ -431,7 +431,7 @@ void checkMoveCheckLegality(int selectedTileIndex, int finalLegalMoveTab[], char
             moveFigureToTile(selectedTileIndex, i, finalLegalMoveTab, temporaryFigurePlacement);
             int* checkedTileTable = checkedTiles(temporaryFigurePlacement);
             int KingIndex = kingIndex(whoseTurn(),temporaryFigurePlacement);
-            if (checkedTileTable[KingIndex] == 1) globalFinalLegalMoveTab[i] = 0;
+            if (checkedTileTable[KingIndex] == 1) finalLegalMoveTab[i] = 0;
             free(checkedTileTable);
         }
     }
