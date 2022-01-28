@@ -97,4 +97,7 @@ void KGResetLegalMoveTables(int transitionalLegalMoveTab[], int finalLegalMoveTa
 void KGMoveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMoveTable[], char figurePlacement[]);
 void KGIsGameOver();
 void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]);
+//AI
+int minmax(int deepth, char board[], int fromTile, int whereTile, int alfa, int beta);
+void loadBools();
 #endif  //_CHESS

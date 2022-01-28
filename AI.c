@@ -78,11 +78,11 @@ double kingWhiteWages[8][8] = {
     {-2.0, -3.0, -3.0, -4.0, -4.0, -3.0, -3.0, -2.0},
     {-1.0, -2.0, -2.0, -2.0, -2.0, -2.0, -2.0, -1.0},
     { 2.0,  2.0,  0.0,  0.0,  0.0,  0.0,  2.0,  2.0},
-    { 2.0,  3.0,  1.0,  0.0,  0.0,  1.0,  3.0,  2.0}
+    { 2.0,  5.0,  0.0,  0.0,  0.0,  0.0,  5.0,  2.0}
 };
 
 double kingBlackWages[8][8] = {
-    { 2.0,  3.0,  1.0,  0.0,  0.0,  1.0,  3.0,  2.0},
+    { 2.0,  5.0,  0.0,  0.0,  0.0,  0.0,  5.0,  2.0},
     { 2.0,  2.0,  0.0,  0.0,  0.0,  0.0,  2.0,  2.0},
     {-1.0, -2.0, -2.0, -2.0, -2.0, -2.0, -2.0, -1.0},
     {-2.0, -3.0, -3.0, -4.0, -4.0, -3.0, -3.0, -2.0},
@@ -153,21 +153,17 @@ int evaluateBoard(char board[], int n){
 
 
 int minmax(int deepth, char board[], int fromTile, int whereTile, int alfa, int beta){
-
-    if(deepth == 2)
-        return evaluateBoard(board, 64);
-
     char tempFigurePlacement[64];
     int tempLegalMoveTab[64] = {0};
     int tempTransitionalLegalMoveTab[484] = {0};
     for(int i = 0; i < 64; i++) tempFigurePlacement[i] = board[i];
-
     if(deepth != 0){
         setLegalMoves(fromTile, tempLegalMoveTab, tempTransitionalLegalMoveTab, tempFigurePlacement);
         checkMoveCheckLegality(fromTile, tempLegalMoveTab, tempFigurePlacement);
         moveFigureLogic(fromTile,whereTile,tempLegalMoveTab,tempFigurePlacement);
     }
-
+    if(deepth == 4)
+        return evaluateBoard(board, 64);
     int indexWhere = 0;
     int indexFrom = 0;
     if(deepth%2 == 0){
@@ -179,28 +175,16 @@ int minmax(int deepth, char board[], int fromTile, int whereTile, int alfa, int 
                 for(int i = 0; i < 484; i++) tempTransitionalLegalMoveTab[i] = 0;
                 for(int i = 0; i < 64; i++) tempLegalMoveTab[i] = 0;
                 setLegalMoves(i, tempLegalMoveTab, tempTransitionalLegalMoveTab, tempFigurePlacement);
-                printf("Before\n");
-                for(int i = 0; i < 64; i++){
-                     printf("%d ", tempLegalMoveTab[i]);
-                     if((i+1)%8 == 0)
-                        putchar('\n');
-                }
-                        putchar('\n');
                 checkMoveCheckLegality(i, tempLegalMoveTab, tempFigurePlacement);
-                printf("After\n");
-                for(int i = 0; i < 64; i++){
-                     printf("%d ", tempLegalMoveTab[i]);
-                     if((i+1)%8 == 0)
-                        putchar('\n');
-                }
-                        putchar('\n');
+
                 for(int j = 0; j < 64; j++){
                     if(tempLegalMoveTab[j] != 0){
                             int val = minmax(deepth+1, tempFigurePlacement, i, j, alfa, beta);
-                            if(val > best){
+                            if(val >= best){
                                 best = val;
                                 indexWhere = j;
                                 indexFrom = i;
+
                             }
                             if(best>alfa)
                                 alfa = best;
@@ -241,15 +225,17 @@ int minmax(int deepth, char board[], int fromTile, int whereTile, int alfa, int 
                     }
                 }
             }
-            roundCounter--;
-            return best;
+            if(deepth != 0){
+                roundCounter--;
+                return best;
+            }
         }
     if(deepth == 0){
         resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
         setLegalMoves(indexFrom, globalFinalLegalMoveTab, globalTransitionalLegalMoveTab, globalFigurePlacement);
         checkMoveCheckLegality(indexFrom, globalFinalLegalMoveTab, globalFigurePlacement);
         loadBools();
-        printf("%d %d %d\n", indexFrom, indexWhere);
+        printf("%d %d\n", indexFrom, indexWhere);
         moveFigureLogic(indexFrom, indexWhere, globalFinalLegalMoveTab, globalFigurePlacement);
         lastMoveOrigin = indexFrom;
         roundCounter++;

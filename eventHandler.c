@@ -49,6 +49,7 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
     //Draw the UI
     if(roundCounter%2){
         int x = minmax(0, globalFigurePlacement, 0, 0, INT_MIN, INT_MAX);
+        x+=0;
     }
     drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
 }
