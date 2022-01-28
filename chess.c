@@ -85,6 +85,7 @@ for(int i = 0; i < 4; i++) {
 SingleplayerGameWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 gtk_window_set_title(GTK_WINDOW(SingleplayerGameWindow),"GTK - Chess");
 gtk_window_set_position(GTK_WINDOW(SingleplayerGameWindow),GTK_WIN_POS_CENTER);
+gtk_window_set_resizable(GTK_WINDOW(SingleplayerGameWindow), FALSE);
 gtk_container_set_border_width(GTK_CONTAINER(SingleplayerGameWindow), 10);
 
 g_signal_connect(G_OBJECT(SingleplayerGameWindow), "destroy",G_CALLBACK(gtk_main_quit), NULL);
