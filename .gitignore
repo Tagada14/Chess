@@ -6,3 +6,4 @@ bin/Debug/Chess.exe
 *.o
 *.txt
 *.chess
+Chess.cscope_file_list
