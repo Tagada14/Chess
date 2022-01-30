@@ -47,8 +47,10 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
         checkMoveCheckLegality(UISelectedTile, globalFinalLegalMoveTab, globalFigurePlacement);
     }
     //Draw the UI
-    if(roundCounter%2){
-        int x = minmax(0, globalFigurePlacement, 0, 0, INT_MIN, INT_MAX);
+    drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
+    if(roundCounter%2 && !gameOver){
+        for(int i = 0; i < 6; i++) gtk_test_widget_wait_for_draw(boardGrid);
+        int x = minmax(0, globalFigurePlacement, 0, 0,0, INT_MIN, INT_MAX);
         x+=0;
     }
     drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
@@ -61,6 +63,7 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(SingleplayerGameWindow);
         startingChessLayout();
+        wagesUpdate();
         resetBoardColors(chessBoardGrid);
         drawBoard(chessBoardGrid, globalFigurePlacement);
     }

@@ -98,6 +98,6 @@ void KGMoveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMove
 void KGIsGameOver();
 void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]);
 //AI
-int minmax(int deepth, char board[], int fromTile, int whereTile, int alfa, int beta);
+int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, int alfa, int beta);
 void loadBools();
 #endif  //_CHESS
