@@ -100,4 +100,5 @@ void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]);
 //AI
 int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, int alfa, int beta);
 void loadBools();
+void wagesUpdate();
 #endif  //_CHESS
