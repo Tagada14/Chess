@@ -49,8 +49,8 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
     //Draw the UI
     drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
     if(roundCounter%2 && !gameOver){
-        for(int i = 0; i < 6; i++) gtk_test_widget_wait_for_draw(boardGrid);
-        int x = minmax(0, globalFigurePlacement, 0, 0,0, INT_MIN, INT_MAX);
+        for(int i = 0; i < 7; i++) gtk_test_widget_wait_for_draw(boardGrid);
+        int x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
         x+=0;
     }
     drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
