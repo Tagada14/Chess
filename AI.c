@@ -145,12 +145,12 @@ double pawnWhiteWages[8][8] = {
     {0.5,  0.5,  1.0,  2.5,  2.5,  1.0,  0.5,  0.5},
     {0.0,  0.0,  0.0,  2.0,  2.0,  0.0,  0.0,  0.0},
     {0.5, -0.5, -1.0,  0.0,  0.0, -1.0, -0.5,  0.5},
-    {0.5,  1.0, 1.0,  -3.0, -3.0,  1.0,  1.0,  0.5},
+    {0.5,  1.0,  1.0,  -3.0, -3.0,  1.0,  1.0,  0.5},
     {0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0}
 };
 double pawnBlackWages[8][8] = {
     {0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0},
-    {0.5,  1.0, 1.0,  -3.0, -3.0,  1.0,  1.0,  0.5},
+    {0.5,  1.0,  1.0,  -3.0, -3.0,  1.0,  1.0,  0.5},
     {0.5, -0.5, -1.0,  0.0,  0.0, -1.0, -0.5,  0.5},
     {0.0,  0.0,  0.0,  2.0,  2.0,  0.0,  0.0,  0.0},
     {0.5,  0.5,  1.0,  2.5,  2.5,  1.0,  0.5,  0.5},
@@ -198,8 +198,7 @@ double evaluateBoard(char board[]){
     }
     return res;
 }
-
-int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, int alfa, int beta){
+int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, double alfa, double beta){
     char tempFigurePlacement[64];
     int tempLegalMoveTab[64] = {0};
     int tempTransitionalLegalMoveTab[484] = {0};
@@ -213,7 +212,7 @@ int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereL
     int indexWhere = 0;
     int indexFrom = 0;
     if(deepth%2 == 0){
-        int best = INT_MIN;
+        double best = (double)INT_MIN;
         if(deepth != 0)
             roundCounter++;
         for(int i = 0; i < 64; i++){
@@ -224,7 +223,7 @@ int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereL
                 checkMoveCheckLegality(i, tempLegalMoveTab, tempFigurePlacement);
                 for(int j = 0; j < 64; j++){
                     if(tempLegalMoveTab[j] != 0){
-                            int val = minmax(deepth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] ,alfa, beta);
+                            double val = minmax(deepth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] ,alfa, beta);
                             if(val >= best){
                                 best = val;
                                 indexWhere = j;
@@ -245,7 +244,7 @@ int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereL
                 return best;
             }
         }else{
-            int best = INT_MAX;
+            double best = (double)INT_MAX;
             roundCounter++;
             for(int i = 0; i < 64; i++){
                 if(getFigureSide(i, tempFigurePlacement) == 'W'){
@@ -255,8 +254,8 @@ int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereL
                     checkMoveCheckLegality(i, tempLegalMoveTab, tempFigurePlacement);
                     for(int j = 0; j < 64; j++){
                         if(tempLegalMoveTab[j] != 0){
-                            int val = minmax(deepth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] , alfa, beta);
-                                if(val < best){
+                            double val = minmax(deepth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] , alfa, beta);
+                                if(val <= best){
                                     best = val;
                                     indexWhere = j;
                                     indexFrom = i;
