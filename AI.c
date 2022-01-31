@@ -53,7 +53,7 @@ double tileWages[120][8][8] = {0};
 double knightWages[8][8] = {
     {-5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0},
     {-4.0, -2.0,  0.0,  0.0,  0.0,  0.0, -2.0, -4.0},
-    {-3.0,  0.0,  1.0,  1.5,  1.5,  1.0,  0.0, -3.0},
+    {-3.0,  0.0,  2.0,  1.5,  1.5,  1.0,  0.0, -3.0},
     {-3.0,  0.5,  1.5,  2.0,  2.0,  1.5,  0.5, -3.0},
     {-3.0,  0.0,  1.5,  2.0,  2.0,  1.5,  0.0, -3.0},
     {-3.0,  0.5,  1.0,  1.5,  1.5,  1.0,  0.5, -3.0},
@@ -84,7 +84,7 @@ double bishopWhiteWages[8][8] = {
 };
 double bishopBlackWages[8][8] = {
     {-2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0},
-    {-1.0,  0.5,  0.0,  0.0,  0.0,  0.0,  0.5, -1.0},
+    {-1.0,  0.5,  0.0,  0.0,  1.0,  0.0,  0.5, -1.0},
     {-1.0,  1.0,  1.0,  1.0,  1.0,  1.0,  1.0, -1.0},
     {-1.0,  0.0,  1.0,  1.0,  1.0,  1.0,  0.0, -1.0},
     {-1.0,  0.5,  0.5,  1.0,  1.0,  0.5,  0.5, -1.0},
@@ -129,7 +129,7 @@ double kingWhiteWages[8][8] = {
 
 double kingBlackWages[8][8] = {
     { 2.0,  5.0,  0.0,  0.0,  0.0,  0.0,  5.0,  2.0},
-    { 2.0,  2.0,  0.0,  0.0,  0.0,  0.0,  2.0,  2.0},
+    { 2.0,  2.0,  0.0,  0.0,  -1.0,  0.0,  2.0,  2.0},
     {-1.0, -2.0, -2.0, -2.0, -2.0, -2.0, -2.0, -1.0},
     {-2.0, -3.0, -3.0, -4.0, -4.0, -3.0, -3.0, -2.0},
     {-3.0, -4.0, -4.0, -5.0, -5.0, -4.0, -4.0, -3.0},
@@ -158,23 +158,23 @@ double pawnBlackWages[8][8] = {
     {5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0},
     {7.0,  7.0,  7.0,  7.0,  7.0,  7.0,  7.0,  7.0}
 };
-double wages[120] = {0};
+int wages[120] = {0};
 void wagesUpdate(){
-    wages[80] = -10.0;
-    wages[83] = -20.0;
-    wages[66] = -30.0;
-    wages[82] = -50.0;
-    wages[81] = -90.0;
-    wages[75] = -300.0;
+    wages[80] = -10;
+    wages[83] = -20;
+    wages[66] = -30;
+    wages[82] = -50;
+    wages[81] = -90;
+    wages[75] = -300;
 
-    wages[69] = 0.0;
+    wages[69] = 0;
 
-    wages[112] = 10.0;
-    wages[115] = 20.0;
-    wages[98] = 30.0;
-    wages[114] = 50.0;
-    wages[113] = 90.0;
-    wages[107] = 300.0;
+    wages[112] = 10;
+    wages[115] = 20;
+    wages[98] = 30;
+    wages[114] = 50;
+    wages[113] = 90;
+    wages[107] = 300;
     for(int i = 0; i < 64; i++) tileWages[113][i/8][i%8] = queenWages[i/8][i%8];
     for(int i = 0; i < 64; i++) tileWages[81][i/8][i%8] = queenWages[i/8][i%8];
     for(int i = 0; i < 64; i++) tileWages[80][i/8][i%8] = pawnWhiteWages[i/8][i%8];
@@ -190,15 +190,15 @@ void wagesUpdate(){
 }
 
 double evaluateBoard(char board[]){
-    double res = 0;
+    double res = 0.0;
     for(int i = 0; i < 64; i++){
         if(board[i] != 'E'){
-            res += wages[(int)board[i]] + tileWages[(int)board[i]][i/8][i%8];
+            res = res + (double)wages[(int)board[i]] + tileWages[(int)board[i]][i/8][i%8];
         }
     }
     return res;
 }
-int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, double alfa, double beta){
+double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, double alfa, double beta){
     char tempFigurePlacement[64];
     int tempLegalMoveTab[64] = {0};
     int tempTransitionalLegalMoveTab[484] = {0};
@@ -224,6 +224,7 @@ int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereL
                 for(int j = 0; j < 64; j++){
                     if(tempLegalMoveTab[j] != 0){
                             double val = minmax(deepth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] ,alfa, beta);
+//                            if (deepth == 0) printf("%d %d %fl\n",i,j,val);
                             if(val >= best){
                                 best = val;
                                 indexWhere = j;

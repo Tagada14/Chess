@@ -128,18 +128,22 @@ GtkWidget *box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
 button = gtk_button_new_with_label("Quit");
 g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(exitWithButton), NULL);
+gtk_widget_set_name(button, "standardButton");
 gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
 
 button = gtk_button_new_with_label("Undo move");
 g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(reverseLastMove), NULL);
+gtk_widget_set_name(button, "standardButton");
 gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
 
 button = gtk_button_new_with_label("Save Configuration");
 g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(saveBoardConfigurationToFile), NULL);
+gtk_widget_set_name(button, "standardButton");
 gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
 
 button = gtk_button_new_with_label("Load Configuration");
 g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(loadBoardConfigurationFromFile), NULL);
+gtk_widget_set_name(button, "standardButton");
 gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
 
 gtk_box_pack_start(GTK_BOX(box1), box2, FALSE, FALSE, 0);

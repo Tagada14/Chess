@@ -52,6 +52,7 @@ extern int KGglobalTransitionalLegalMoveTab[];
 extern int KGglobalFinalLegalMoveTab[];
 extern int KGUISelectedTile;
 extern bool KGGameOver;
+extern bool KGGameWon;
 
 extern GtkWidget* SingleplayerGameWindow;
 extern GtkWidget* menuWindow;
@@ -97,8 +98,10 @@ void KGResetLegalMoveTables(int transitionalLegalMoveTab[], int finalLegalMoveTa
 void KGMoveFigureLogic(int selectedTileIndex, int actionTileIndex, int legalMoveTable[], char figurePlacement[]);
 void KGIsGameOver();
 void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]);
+void displayEngGameMessage(bool didWin);
 //AI
-int minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, double alfa, double beta);
+double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, double alfa, double beta);
 void loadBools();
 void wagesUpdate();
+double evaluateBoard(char board[]);
 #endif  //_CHESS

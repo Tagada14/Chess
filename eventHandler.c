@@ -49,10 +49,12 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
     //Draw the UI
     drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
     if(roundCounter%2 && !gameOver){
-        for(int i = 0; i < 7; i++) gtk_test_widget_wait_for_draw(boardGrid);
-        int x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
-        x+=0;
+        for(int i = 0; i < 1; i++) gtk_test_widget_wait_for_draw(boardGrid);
+        double x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
     }
+//    globalFinalLegalMoveTab[18] = 1;
+//    moveFigureToTile(1, 18, globalFinalLegalMoveTab,globalFigurePlacement);
+//    evaluateBoard(globalFigurePlacement);
     drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
 }
 
@@ -116,6 +118,8 @@ void knightGameEventHandler (GtkWidget* clickedTile, gpointer data){
         KGUISelectedTile = -1;
     //Draw the UI
     KGdrawUI(boardGrid, KGg_FigurePlacement, KGglobalFinalLegalMoveTab);
+//    displayEngGameMessage(true);
+    if(KGGameOver) displayEngGameMessage(KGGameWon);
 }
 
 void reverseLastMove(GtkWidget* menuButton, gpointer data){
