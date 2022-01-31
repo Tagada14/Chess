@@ -19,6 +19,7 @@ void drawBoard (GtkWidget* grid, char figurePlacement[]){
         else if (figurePlacement[i] == 'q') image = gtk_image_new_from_file("icons//Chess_qdt60.png");
         else if (figurePlacement[i] == 'K') image = gtk_image_new_from_file("icons//Chess_klt60.png");
         else if (figurePlacement[i] == 'k') image = gtk_image_new_from_file("icons//Chess_kdt60.png");
+        else if (figurePlacement[i] == 'X') image = gtk_image_new_from_file("icons//Transparent_X2.png");
         if (image != NULL) gtk_button_set_image(GTK_BUTTON(button), image);
         else gtk_button_set_image(GTK_BUTTON(button), NULL);
     }
@@ -70,20 +71,26 @@ void changeTurnLabel(GtkWidget* label){
 }
 
 void KGdrawVisitedTiles(GtkWidget* grid, char figurePlacement[]){
+    int l = 0;
     for (int i = 0; i < 64; i++){
+        if (i % 8 == 0) l++;
+            l++;
         GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(grid), tabGrid[i].posX, tabGrid[i].posY);
-        if (figurePlacement[i] == 'X')
-            gtk_widget_set_name(button, "tileVisited");
+        if (figurePlacement[i] == 'X'){
+            if (l % 2 == 0) gtk_widget_set_name(button, "BrightTileVisited");
+            else gtk_widget_set_name(button, "DarkTileVisited");
+        }
     }
 }
 
 void drawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){
-    drawBoard(grid, figurePlacement);
     resetBoardColors(grid);
     changeTurnLabel(label);
     if (UISelectedTile != -1){
         drawLegalMoves(grid, legalMoveTab);
     }
+    gtk_test_widget_wait_for_draw(grid);
+    drawBoard(grid, figurePlacement);
 }
 
 void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){

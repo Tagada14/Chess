@@ -1,3 +1,6 @@
+*{
+    font-family:'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 window {
     background-color: white;
     color: black;
@@ -36,15 +39,46 @@ button {
     border-width: 2px;
 }
 
-#tileVisited{
-    background-color: red;
+#DarkTileVisited{
+    background-color: #8a664a;
     border-style: solid;
     border-color: black;
     border-width: 2px;
 }
 
+#BrightTileVisited{
+    background-color: #baa586;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
+
+#standardButton{
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    font-size: 15px;
+}
+
+#standardButton:hover{
+    background-color: #e3dfda;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    font-size: 15px;
+}
+
 #menuButton{
     background-color: #daeddf;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    font-size: 30px;
+}
+
+#menuButton:hover{
+    background-color: #b6d6bf;
     border-style: solid;
     border-color: black;
     border-width: 1px;

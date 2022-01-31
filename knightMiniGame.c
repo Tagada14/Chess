@@ -4,6 +4,7 @@
 int KGUISelectedTile = -1;
 //game state
 bool KGGameOver = false;
+bool KGGameWon = false;
 char KGg_FigurePlacement[64];
 
 int KGglobalTransitionalLegalMoveTab[144];
@@ -74,12 +75,25 @@ void KGIsGameOver(){
     }
     if(isOver){
         if (won){
-            printf("Congratulations, You've won!");
             KGGameOver = true;
+            KGGameWon = true;
         }
-        else{
-            printf("Game Over");
-            KGGameOver = true;
-        }
+        else KGGameOver = true;
     }
+}
+
+void displayEngGameMessage(bool didWin){
+    GtkWidget* dialog;
+    if(didWin){
+        printf("Congratulations, You've won!");
+        dialog = gtk_message_dialog_new(GTK_WINDOW(knightGameWindow),GTK_DIALOG_DESTROY_WITH_PARENT,GTK_MESSAGE_QUESTION,GTK_BUTTONS_YES_NO,"%s", "Congratulations! You've Won!");
+
+    }
+    else{
+        printf("Game Over");
+            dialog = gtk_message_dialog_new(GTK_WINDOW(knightGameWindow),GTK_DIALOG_DESTROY_WITH_PARENT,GTK_MESSAGE_INFO,GTK_BUTTONS_NONE,"%s", "Maybe next time.");
+    }
+    gtk_widget_set_size_request(dialog,300,50);
+    gtk_dialog_run(GTK_DIALOG(dialog));
+//    gtk_widget_destroy(dialog);
 }
