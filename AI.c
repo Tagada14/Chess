@@ -3,6 +3,8 @@
 #include "chess.h"
 
 bool AI_on = false;
+int iFrom = -1;
+int iWhere = -1;
 
 void loadBools(){
     gameOver = lastTurnBoardConfiguration.gameOver;
@@ -295,6 +297,8 @@ double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhe
         loadBools();
 //        printf("%d %d\n", indexFrom, indexWhere);
         moveFigureLogic(indexFrom, indexWhere, globalFinalLegalMoveTab, globalFigurePlacement);
+        iFrom = indexFrom;
+        iWhere = indexWhere;
         lastMoveOrigin = indexFrom;
         roundCounter++;
         isGameOver();

@@ -24,6 +24,12 @@ button {
     border-color: black;
     border-width: 2px;
 }
+#AIMOVE{
+    background-color: red;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+}
 
 #legalMove{
     background-color: green;
