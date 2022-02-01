@@ -1,5 +1,15 @@
 #include "chess.h"
 
+void chessGameLoadingSequence(){
+    startingChessLayout();
+    resetGameState();
+    resetUIState();
+    resetBoardColors(chessBoardGrid);
+    drawBoard(chessBoardGrid, globalFigurePlacement);
+    changeTurnLabel(label);
+    gtk_test_widget_wait_for_draw(chessBoardGrid);
+}
+
 void eventHandler(GtkWidget* clickedTile, gpointer data){
     if (gameOver) return;
     gint* i = (gint*)data;
@@ -65,22 +75,18 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
     gint* i = (gint*)data;
     int menuTileIndex = (int)*i;
     if (menuTileIndex == 0){
-        createSingleplayerGameWindow();
+        createChessGameWindow();
         gtk_widget_hide(menuWindow);
-        gtk_widget_show_all(SingleplayerGameWindow);
-        startingChessLayout();
+        gtk_widget_show_all(chessGameWindow);
+        chessGameLoadingSequence();
         wagesUpdate();
-        resetBoardColors(chessBoardGrid);
-        drawBoard(chessBoardGrid, globalFigurePlacement);
         AI_on = true;
     }
     else if (menuTileIndex == 1){
-        createMultiplayerGameWindow();
+        createChessGameWindow();
         gtk_widget_hide(menuWindow);
-        gtk_widget_show_all(MultiplayerGameWindow);
-        startingChessLayout();
-        resetBoardColors(chessBoardGrid);
-        drawBoard(chessBoardGrid, globalFigurePlacement);
+        gtk_widget_show_all(chessGameWindow);
+        chessGameLoadingSequence();
         AI_on = false;
     }
     else if (menuTileIndex == 2){
@@ -95,6 +101,9 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
         createCreditsWindow();
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(creditsWindow);
+    }
+    else if (menuTileIndex == 5){
+        gtk_main_quit();
     }
 }
 
@@ -146,7 +155,7 @@ void reverseLastMove(GtkWidget* menuButton, gpointer data){
 
 void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data){
     GtkWidget * dialog;
-    dialog = gtk_file_chooser_dialog_new("Choose a file", GTK_WINDOW(SingleplayerGameWindow),GTK_FILE_CHOOSER_ACTION_OPEN, "Choose", GTK_RESPONSE_OK, "Cancel", GTK_RESPONSE_CANCEL,NULL);
+    dialog = gtk_file_chooser_dialog_new("Choose a file", GTK_WINDOW(chessGameWindow),GTK_FILE_CHOOSER_ACTION_OPEN, "Choose", GTK_RESPONSE_OK, "Cancel", GTK_RESPONSE_CANCEL,NULL);
     gtk_widget_show(dialog);
     gint resp = gtk_dialog_run(GTK_DIALOG(dialog));
     if(resp==GTK_RESPONSE_OK)

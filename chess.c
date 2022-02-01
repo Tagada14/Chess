@@ -10,7 +10,7 @@ for (int i = 0; i < 64; i++){
     tabGrid[i].lenY = 1;
     tabGrid[i].index = i;
 }
-for (int i = 0; i < 5; i++){
+for (int i = 0; i < 6; i++){
     menuGrid[i].posX = 0;
     menuGrid[i].posY = i;
     menuGrid[i].lenX = 1;

@@ -54,23 +54,24 @@ button {
 }
 
 #standardButton{
-    background-color: white;
+    background-color: #d69957;
     border-style: solid;
     border-color: black;
     border-width: 1px;
-    font-size: 15px;
+    border-radius: 5px;
+    color: #022026;
+    font-size: 20px;
 }
 
 #standardButton:hover{
-    background-color: #e3dfda;
     border-style: solid;
     border-color: black;
     border-width: 1px;
-    font-size: 15px;
+    font-size: 25px;
 }
 
 #menuButton{
-    background-color: #d69957 ;
+    background-color: #d69957;
     border-style: solid;
     border-color: black;
     border-radius: 10px;
@@ -95,4 +96,9 @@ button {
 
 #bright:hover{
     background-color: #F2DEC5;
+}
+
+#standardLabel{
+    font-size: 20px;
+    color: #022026;
 }

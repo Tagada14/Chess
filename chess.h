@@ -54,8 +54,7 @@ extern int KGUISelectedTile;
 extern bool KGGameOver;
 extern bool KGGameWon;
 //GTK
-extern GtkWidget* SingleplayerGameWindow;
-extern GtkWidget* MultiplayerGameWindow;
+extern GtkWidget* chessGameWindow;
 extern GtkWidget* menuWindow;
 extern GtkWidget* creditsWindow;
 extern GtkWidget* chessBoardGrid;
@@ -92,6 +91,8 @@ void saveConfigurationToFile();
 void loadConfigurationFromFile();
 void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data);
 void saveBoardConfigurationToFile(GtkWidget* menuButton, gpointer data);
+void resetGameState();
+void resetUIState();
 //Knight Mini-game
 void knightGameEventHandler (GtkWidget* menuButton, gpointer data);
 void startingKnightLayout();
@@ -110,5 +111,5 @@ void exitWithButton( GtkWidget *widget, gpointer data);
 void createCreditsWindow();
 void createMenuWindow();
 void createKnightMGWindow();
-void createSingleplayerGameWindow();
+void createChessGameWindow();
 #endif  //_CHESS

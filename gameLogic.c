@@ -36,6 +36,22 @@ void startingChessLayout(){
     globalFigurePlacement[3] = 'q'; globalFigurePlacement[4] = 'k'; globalFigurePlacement[60] = 'K'; globalFigurePlacement[59] = 'Q';
 }
 
+void resetGameState(){
+    roundCounter = 0;
+    lastMoveOrigin = -1;
+    gameOver = false;
+    blackKingDidNotMove = true;
+    whiteKingDidNotMove = true;
+    leftBlackRookDidNotMove = true;
+    rightBlackRookDidNotMove = true;
+    leftWhiteRookDidNotMove = true;
+    rightWhiteRookDidNotMove = true;
+}
+
+void resetUIState(){
+    UISelectedTile = -1;
+}
+
 char whoseTurn(){
     if(roundCounter%2 == 0)return 'W';
     else return 'B';
