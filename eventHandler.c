@@ -61,13 +61,14 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
         drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
         gtk_test_widget_wait_for_draw(boardGrid);
         if(roundCounter%2 && !gameOver){
-            for(int i = 0; i < 1; i++) gtk_test_widget_wait_for_draw(boardGrid);
+            for(int i = 0; i < 5; i++) gtk_test_widget_wait_for_draw(boardGrid);
             double x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
         }
     }
 //    globalFinalLegalMoveTab[18] = 1;
 //    moveFigureToTile(1, 18, globalFinalLegalMoveTab,globalFigurePlacement);
 //    evaluateBoard(globalFigurePlacement);
+
     drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
 }
 

@@ -62,6 +62,8 @@ extern GtkWidget* knightGameWindow;
 extern GtkWidget* knightGameChessBoardGrid;
 //AI
 extern bool AI_on;
+extern int iFrom;
+extern int iWhere;
 
 void eventHandler(GtkWidget* clickedTile, gpointer data);
 void startingChessLayout();
@@ -79,6 +81,7 @@ void drawLegalMoves(GtkWidget* boardGrid, int legalMoveTab[]);
 void myCSS(void);
 void changeTurnLabel(GtkWidget* label);
 void drawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]);
+void drawLastMove(GtkWidget* boardGrid);
 void checkMoveCheckLegality(int selectedTileIndex, int finalLegalMoveTab[], char figurePlacement[]);
 int* checkedTiles(char figurePlacement[]);
 void isGameOver();

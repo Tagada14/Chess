@@ -44,8 +44,17 @@ void drawLegalMoves(GtkWidget* boardGrid, int legalMoveTab[]){
         }
         else if (legalMoveTab[i] == 2){
             gtk_widget_set_name(button, "legalMoveKill");
+        }else if (legalMoveTab[i] == 5){
+            gtk_widget_set_name(button, "AIMOVE");
         }
     }
+}
+
+void drawLastMove(GtkWidget* boardGrid){
+    GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(boardGrid), tabGrid[iFrom].posX, tabGrid[iFrom].posY);
+    gtk_widget_set_name(button, "AIMOVE");
+    button = gtk_grid_get_child_at(GTK_GRID(boardGrid), tabGrid[iWhere].posX, tabGrid[iWhere].posY);
+    gtk_widget_set_name(button, "AIMOVE");
 }
 
 void myCSS(void){
@@ -91,6 +100,8 @@ void drawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){
     }
 //    gtk_test_widget_wait_for_draw(grid);
     drawBoard(grid, figurePlacement);
+    if(iFrom >= 0 && iWhere >= 0)
+        drawLastMove(grid);
 }
 
 void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){
