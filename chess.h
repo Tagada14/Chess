@@ -104,4 +104,10 @@ double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhe
 void loadBools();
 void wagesUpdate();
 double evaluateBoard(char board[]);
+//GTK
+void exitWithButton( GtkWidget *widget, gpointer data);
+void createCreditsWindow();
+void createMenuWindow();
+void createKnightMGWindow();
+void createSingleplayerGameWindow();
 #endif  //_CHESS
