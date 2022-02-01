@@ -1,9 +1,16 @@
 #include "chess.h"
 
+bool start_clock = false;
+guint timer_id = 0;
+
 void chessGameLoadingSequence(){
     startingChessLayout();
     resetGameState();
     resetUIState();
+    sec_expired = clock_time;
+    sec_expired_white = clock_time;
+    sec_expired_black = clock_time;
+    set_timer(timer);
     resetBoardColors(chessBoardGrid);
     drawBoard(chessBoardGrid, globalFigurePlacement);
     changeTurnLabel(label);
@@ -26,10 +33,15 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
            globalFinalLegalMoveTab[actionClickedTileIndex] != 0){
             saveCurrentConfiguration();
             moveFigureLogic(UISelectedTile, actionClickedTileIndex, globalFinalLegalMoveTab, globalFigurePlacement);
-            iFrom = UISelectedTile;
-            iWhere = actionClickedTileIndex;
+            if (AI_on == false){
+                iFrom = UISelectedTile;
+                iWhere = actionClickedTileIndex;
+                changeTurnTimers();
+            }
             lastMoveOrigin = UISelectedTile;
             roundCounter++;
+            //start the clock
+            if (roundCounter == 1) timer_id = g_timeout_add_seconds(1, timer_update, timer);
             //Check if it's game over
             resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
             isGameOver();
@@ -67,10 +79,6 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
             double x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
         }
     }
-//    globalFinalLegalMoveTab[18] = 1;
-//    moveFigureToTile(1, 18, globalFinalLegalMoveTab,globalFigurePlacement);
-//    evaluateBoard(globalFigurePlacement);
-
     drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
 }
 

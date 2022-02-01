@@ -62,6 +62,12 @@ extern GtkWidget* creditsWindow;
 extern GtkWidget* chessBoardGrid;
 extern GtkWidget* knightGameWindow;
 extern GtkWidget* knightGameChessBoardGrid;
+extern GtkWidget* timer;
+extern int sec_expired;
+extern int sec_expired_white;
+extern int sec_expired_black;
+extern const int clock_time;
+extern guint timer_id;
 //AI
 extern bool AI_on;
 
@@ -96,6 +102,8 @@ void loadBoardConfigurationFromFile(GtkWidget* menuButton, gpointer data);
 void saveBoardConfigurationToFile(GtkWidget* menuButton, gpointer data);
 void resetGameState();
 void resetUIState();
+void changeTurnTimers();
+gboolean timer_update(gpointer data);
 //Knight Mini-game
 void knightGameEventHandler (GtkWidget* menuButton, gpointer data);
 void startingKnightLayout();
@@ -115,4 +123,5 @@ void createCreditsWindow();
 void createMenuWindow();
 void createKnightMGWindow();
 void createChessGameWindow();
+void set_timer(gpointer data);
 #endif  //_CHESS

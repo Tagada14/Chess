@@ -52,6 +52,8 @@ void resetGameState(){
 
 void resetUIState(){
     UISelectedTile = -1;
+    iFrom = -1;
+    iWhere = -1;
 }
 
 char whoseTurn(){
@@ -497,6 +499,10 @@ void isGameOver(){
                 }
             }
         }
+    if(!flagMoves){
+        if (timer_id != 0)
+            g_source_remove(timer_id);
+    }
     if(flagCheck && !flagMoves){
         printf("Game Over\n");
         if (whoseTurn() == 'W') printf("Black wins\n");

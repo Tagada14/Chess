@@ -82,6 +82,14 @@ button {
     font-size: 40px;
     border: 2px solid black;
 }
+
+#Timercritical{
+    background-color: #8a4a4a;
+    color: white;
+    font-size: 40px;
+    border: 2px solid black;
+}
+
 #menuButton{
     background-color: #d69957;
     border-style: solid;
@@ -111,6 +119,9 @@ button {
 }
 
 #standardLabel{
-    font-size: 20px;
+    font-size: 30px;
     color: #022026;
+    border-width: 2px;
+    border-color: black;
+    padding: 10px;
 }

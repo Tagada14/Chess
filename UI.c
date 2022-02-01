@@ -91,6 +91,17 @@ void changeTurnLabel(GtkWidget* label){
     else gtk_label_set_text(GTK_LABEL(label), "White's Turn");
 }
 
+void changeTurnTimers(){
+    if (whoseTurn() == 'B'){
+        sec_expired_white = sec_expired;
+        sec_expired = sec_expired_black;
+    }
+    else{
+        sec_expired_black = sec_expired;
+        sec_expired = sec_expired_white;
+    }
+}
+
 void KGdrawVisitedTiles(GtkWidget* grid, char figurePlacement[]){
     int l = 0;
     for (int i = 0; i < 64; i++){
