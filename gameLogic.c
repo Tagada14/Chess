@@ -500,8 +500,10 @@ void isGameOver(){
             }
         }
     if(!flagMoves){
-        if (timer_id != 0)
+        if (timer_id != 0){
             g_source_remove(timer_id);
+            timer_id = 0;
+        }
     }
     if(flagCheck && !flagMoves){
         printf("Game Over\n");

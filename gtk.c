@@ -18,8 +18,10 @@ void exitWithButton( GtkWidget *widget, gpointer data) {
 }
 
 void returnToMenu(GtkWidget* button, gpointer data){
-    if (timer_id != 0)
-            g_source_remove(timer_id);
+    if (timer_id != 0){
+        g_source_remove(timer_id);
+        timer_id = 0;
+    }
     GtkWidget* window = gtk_widget_get_toplevel(button);
     gtk_widget_show_all(menuWindow);
     gtk_widget_hide(window);
