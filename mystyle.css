@@ -1,5 +1,5 @@
 *{
-    font-family:'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Calibri';
 }
 window {
     background-color: white;
@@ -70,18 +70,23 @@ button {
 }
 
 #menuButton{
-    background-color: #daeddf;
+    background-color: #d69957 ;
     border-style: solid;
     border-color: black;
-    border-width: 1px;
+    border-radius: 10px;
+    color: #022026;
+    text-decoration: none;
+    border-width: 2px;
     font-size: 30px;
 }
 
 #menuButton:hover{
-    background-color: #b6d6bf;
-    border-style: solid;
-    border-color: black;
-    border-width: 1px;
+    font-size: 50px;
+}
+#menuWindow{
+    background-color:  #F2B05E;
+    background-image: url("icons//ezgif.com-gif-maker.gif") ;
+    background-size: cover;
 }
 
 #dark:hover{
