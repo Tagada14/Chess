@@ -13,6 +13,14 @@ void exitWithButton( GtkWidget *widget, gpointer data) {
     gtk_main_quit();
 }
 
+void returnToMenu(GtkWidget* button, gpointer data){
+    GtkWindow* window;
+    window = gtk_widget_get_parent_window(button);
+    gtk_window_close(MultiplayerGameWindow);
+//    gtk_widget_destroy(window);
+    gtk_widget_show_all(menuWindow);
+}
+
 void createCreditsWindow(){
     creditsWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(creditsWindow),"GTK - Credits");
@@ -193,6 +201,11 @@ void createMultiplayerGameWindow(){
 
     button = gtk_button_new_with_label("Quit");
     g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(exitWithButton), NULL);
+    gtk_widget_set_name(button, "standardButton");
+    gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
+
+    button = gtk_button_new_with_label("Return to Menu");
+    g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(returnToMenu), NULL);
     gtk_widget_set_name(button, "standardButton");
     gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
 
