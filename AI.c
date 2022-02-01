@@ -4,6 +4,16 @@
 
 bool AI_on = false;
 
+void loadBools(){
+    gameOver = lastTurnBoardConfiguration.gameOver;
+    leftBlackRookDidNotMove = lastTurnBoardConfiguration.leftBlackRookDidNotMove ;
+    leftWhiteRookDidNotMove = lastTurnBoardConfiguration.leftWhiteRookDidNotMove;
+    rightBlackRookDidNotMove = lastTurnBoardConfiguration.rightBlackRookDidNotMove;
+    rightWhiteRookDidNotMove = lastTurnBoardConfiguration.rightWhiteRookDidNotMove;
+    blackKingDidNotMove = lastTurnBoardConfiguration.blackKingDidNotMove;
+    whiteKingDidNotMove = lastTurnBoardConfiguration.whiteKingDidNotMove;
+}
+
 /*
 Old version of calculating board value
 struct tile{

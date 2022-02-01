@@ -103,7 +103,6 @@ void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]);
 void displayEngGameMessage(bool didWin);
 //AI
 double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, double alfa, double beta);
-void loadBools();
 void wagesUpdate();
 double evaluateBoard(char board[]);
 //GTK

@@ -521,16 +521,6 @@ void loadConfiguration(){
     }
 }
 
-void loadBools(){
-    gameOver = lastTurnBoardConfiguration.gameOver;
-    leftBlackRookDidNotMove = lastTurnBoardConfiguration.leftBlackRookDidNotMove ;
-    leftWhiteRookDidNotMove = lastTurnBoardConfiguration.leftWhiteRookDidNotMove;
-    rightBlackRookDidNotMove = lastTurnBoardConfiguration.rightBlackRookDidNotMove;
-    rightWhiteRookDidNotMove = lastTurnBoardConfiguration.rightWhiteRookDidNotMove;
-    blackKingDidNotMove = lastTurnBoardConfiguration.blackKingDidNotMove;
-    whiteKingDidNotMove = lastTurnBoardConfiguration.whiteKingDidNotMove;
-}
-
 void saveConfigurationToFile(){
     char* fileName = malloc(sizeof(char)*28);
     time_t secs = time(0);
