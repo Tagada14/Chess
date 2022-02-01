@@ -53,14 +53,16 @@ extern int KGglobalFinalLegalMoveTab[];
 extern int KGUISelectedTile;
 extern bool KGGameOver;
 extern bool KGGameWon;
-
+//GTK
 extern GtkWidget* SingleplayerGameWindow;
+extern GtkWidget* MultiplayerGameWindow;
 extern GtkWidget* menuWindow;
 extern GtkWidget* creditsWindow;
 extern GtkWidget* chessBoardGrid;
 extern GtkWidget* knightGameWindow;
 extern GtkWidget* knightGameChessBoardGrid;
-
+//AI
+extern bool AI_on;
 
 void eventHandler(GtkWidget* clickedTile, gpointer data);
 void startingChessLayout();

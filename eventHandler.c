@@ -47,10 +47,13 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
         checkMoveCheckLegality(UISelectedTile, globalFinalLegalMoveTab, globalFigurePlacement);
     }
     //Draw the UI
-    drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
-    if(roundCounter%2 && !gameOver){
-        for(int i = 0; i < 1; i++) gtk_test_widget_wait_for_draw(boardGrid);
-        double x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
+    if (AI_on){
+        drawUI(boardGrid, globalFigurePlacement, globalFinalLegalMoveTab);
+        gtk_test_widget_wait_for_draw(boardGrid);
+        if(roundCounter%2 && !gameOver){
+            for(int i = 0; i < 1; i++) gtk_test_widget_wait_for_draw(boardGrid);
+            double x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
+        }
     }
 //    globalFinalLegalMoveTab[18] = 1;
 //    moveFigureToTile(1, 18, globalFinalLegalMoveTab,globalFigurePlacement);
@@ -62,21 +65,34 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
     gint* i = (gint*)data;
     int menuTileIndex = (int)*i;
     if (menuTileIndex == 0){
+        createSingleplayerGameWindow();
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(SingleplayerGameWindow);
         startingChessLayout();
         wagesUpdate();
         resetBoardColors(chessBoardGrid);
         drawBoard(chessBoardGrid, globalFigurePlacement);
+        AI_on = true;
     }
     else if (menuTileIndex == 1){
+        createMultiplayerGameWindow();
+        gtk_widget_hide(menuWindow);
+        gtk_widget_show_all(MultiplayerGameWindow);
+        startingChessLayout();
+        resetBoardColors(chessBoardGrid);
+        drawBoard(chessBoardGrid, globalFigurePlacement);
+        AI_on = false;
+    }
+    else if (menuTileIndex == 2){
+        createKnightMGWindow();
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(knightGameWindow);
         startingKnightLayout();
         resetBoardColors(knightGameChessBoardGrid);
         drawBoard(knightGameChessBoardGrid, KGg_FigurePlacement);
     }
-    else if (menuTileIndex == 3){
+    else if (menuTileIndex == 4){
+        createCreditsWindow();
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(creditsWindow);
     }

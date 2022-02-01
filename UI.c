@@ -89,7 +89,7 @@ void drawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){
     if (UISelectedTile != -1){
         drawLegalMoves(grid, legalMoveTab);
     }
-    gtk_test_widget_wait_for_draw(grid);
+//    gtk_test_widget_wait_for_draw(grid);
     drawBoard(grid, figurePlacement);
 }
 

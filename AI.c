@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <limits.h>
 #include "chess.h"
+
+bool AI_on = false;
+
 /*
 Old version of calculating board value
 struct tile{
@@ -280,7 +283,7 @@ double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhe
         setLegalMoves(indexFrom, globalFinalLegalMoveTab, globalTransitionalLegalMoveTab, globalFigurePlacement);
         checkMoveCheckLegality(indexFrom, globalFinalLegalMoveTab, globalFigurePlacement);
         loadBools();
-        printf("%d %d\n", indexFrom, indexWhere);
+//        printf("%d %d\n", indexFrom, indexWhere);
         moveFigureLogic(indexFrom, indexWhere, globalFinalLegalMoveTab, globalFigurePlacement);
         lastMoveOrigin = indexFrom;
         roundCounter++;
