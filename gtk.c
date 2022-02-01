@@ -7,6 +7,7 @@ GtkWidget* creditsWindow = NULL;
 GtkWidget* knightGameWindow = NULL;
 GtkWidget* chessBoardGrid;
 GtkWidget* knightGameChessBoardGrid;
+static int sec_expired = 0;
 
 void exitWithButton( GtkWidget *widget, gpointer data) {
     gtk_main_quit();
@@ -85,9 +86,19 @@ void createKnightMGWindow(){
     gtk_box_pack_start(GTK_BOX(knightGameBox), knightGameChessBoardGrid, TRUE, TRUE, 0);
 }
 
+static gboolean timer_update(gpointer data)
+{
+    GtkLabel *label = (GtkLabel*)data;
+    char buf[256];
+    memset(&buf, 0x0, 256);
+    sec_expired++;
+    snprintf(buf, 255, "%02d:%02d", (sec_expired)/60, sec_expired%60);
+    gtk_label_set_label(label, buf);
+    return true;
+}
+
 void createChessGameWindow(){
     if (chessGameWindow != NULL) return;
-    printf("test\n");
     chessGameWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(chessGameWindow),"GTK - Chess");
     gtk_window_set_position(GTK_WINDOW(chessGameWindow),GTK_WIN_POS_CENTER);
@@ -96,20 +107,28 @@ void createChessGameWindow(){
 
     g_signal_connect(G_OBJECT(chessGameWindow), "destroy",G_CALLBACK(gtk_main_quit), NULL);
 
-    GtkWidget *box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    GtkWidget *box3 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    //box1 -> box for our grid
+    GtkWidget *box1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    //box2 -> box for left panel
+    GtkWidget *box2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    //box2 -> box for all
+    GtkWidget *box3 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
 
-    gtk_box_set_homogeneous(GTK_BOX(box3),TRUE);
     gtk_box_set_homogeneous(GTK_BOX(box1),FALSE);
+    gtk_box_pack_start(GTK_BOX(box3), box2, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box3), box1, FALSE, FALSE, 0);
 
-    gtk_box_pack_start(GTK_BOX(box1), box3, FALSE, FALSE, 0);
-
-    gtk_container_add(GTK_CONTAINER(chessGameWindow), box1);
+    gtk_container_add(GTK_CONTAINER(chessGameWindow), box3);
 
 
     label = gtk_label_new("White's Turn");
     gtk_widget_set_name(label, "standardLabel");
-    gtk_box_pack_start(GTK_BOX(box3), label, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box2), label, FALSE, FALSE, 0);
+
+    GtkWidget *timer = gtk_label_new("00:00");
+    gtk_widget_set_name(timer, "Timer");
+    g_timeout_add_seconds(1, timer_update, timer);
+    gtk_box_pack_start(GTK_BOX(box2), timer, TRUE, FALSE, 0);
 
 
     chessBoardGrid = gtk_grid_new();
@@ -131,17 +150,7 @@ void createChessGameWindow(){
         gtk_grid_attach(GTK_GRID(chessBoardGrid), button, tabGrid[i].posX, tabGrid[i].posY, tabGrid[i].lenX, tabGrid[i].lenY);
     }
 
-    GtkWidget *box2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
-    button = gtk_button_new_with_label("Quit");
-    g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(exitWithButton), NULL);
-    gtk_widget_set_name(button, "standardButton");
-    gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
-
-    button = gtk_button_new_with_label("Return to Menu");
-    g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(returnToMenu), NULL);
-    gtk_widget_set_name(button, "standardButton");
-    gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
 
     button = gtk_button_new_with_label("Undo move");
     g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(reverseLastMove), NULL);
@@ -151,12 +160,21 @@ void createChessGameWindow(){
     button = gtk_button_new_with_label("Save Configuration");
     g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(saveBoardConfigurationToFile), NULL);
     gtk_widget_set_name(button, "standardButton");
-    gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box2), button, FALSE, FALSE, 0);
 
     button = gtk_button_new_with_label("Load Configuration");
     g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(loadBoardConfigurationFromFile), NULL);
     gtk_widget_set_name(button, "standardButton");
-    gtk_box_pack_start(GTK_BOX(box2), button, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box2), button, FALSE, FALSE, 0);
 
-    gtk_box_pack_start(GTK_BOX(box1), box2, FALSE, FALSE, 0);
+    button = gtk_button_new_with_label("Return to Menu");
+    g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(returnToMenu), NULL);
+    gtk_widget_set_name(button, "standardButton");
+    gtk_box_pack_start(GTK_BOX(box2), button, FALSE, FALSE, 0);
+
+    button = gtk_button_new_with_label("Quit");
+    g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(exitWithButton), NULL);
+    gtk_widget_set_name(button, "standardButton");
+    gtk_box_pack_start(GTK_BOX(box2), button, FALSE, FALSE, 0);
+
 }

@@ -60,7 +60,7 @@ button {
 }
 
 #standardButton{
-    background-color: #d69957;
+    background-color: #F1D8B6;
     border-style: solid;
     border-color: black;
     border-width: 1px;
@@ -73,9 +73,14 @@ button {
     border-style: solid;
     border-color: black;
     border-width: 1px;
-    font-size: 25px;
+    background-color: #baa586;
 }
-
+#Timer{
+    background-color: #8a664a;
+    color: white;
+    font-size: 40px;
+    border: 2px solid black;
+}
 #menuButton{
     background-color: #d69957;
     border-style: solid;
