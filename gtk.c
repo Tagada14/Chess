@@ -39,6 +39,7 @@ void createMenuWindow(){
     menuWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(menuWindow),"GTK - Menu");
     gtk_window_set_position(GTK_WINDOW(menuWindow),GTK_WIN_POS_CENTER);
+    gtk_window_set_resizable(GTK_WINDOW(menuWindow), FALSE);
     gtk_container_set_border_width(GTK_CONTAINER(menuWindow), 30);
     gtk_widget_set_name(menuWindow, "menuWindow");
 
@@ -68,6 +69,7 @@ void createKnightMGWindow(){
     knightGameWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(knightGameWindow),"GTK - Knight Minigame");
     gtk_window_set_position(GTK_WINDOW(knightGameWindow),GTK_WIN_POS_CENTER);
+    gtk_window_set_resizable(GTK_WINDOW(knightGameWindow), FALSE);
     gtk_container_set_border_width(GTK_CONTAINER(knightGameWindow), 10);
 
     g_signal_connect(G_OBJECT(knightGameWindow), "destroy",G_CALLBACK(gtk_main_quit), NULL);

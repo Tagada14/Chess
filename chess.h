@@ -35,6 +35,8 @@ extern struct boardConfiguration lastTurnBoardConfiguration;
 extern int roundCounter;
 extern GtkWidget* label;
 extern int UISelectedTile;
+extern int iFrom;
+extern int iWhere;
 extern char globalFigurePlacement[];
 extern int globalTransitionalLegalMoveTab[];
 extern int globalFinalLegalMoveTab[];
@@ -62,8 +64,6 @@ extern GtkWidget* knightGameWindow;
 extern GtkWidget* knightGameChessBoardGrid;
 //AI
 extern bool AI_on;
-extern int iFrom;
-extern int iWhere;
 
 void eventHandler(GtkWidget* clickedTile, gpointer data);
 void startingChessLayout();
