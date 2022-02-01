@@ -92,6 +92,14 @@ int kingIndex(char side, char figurePlacement[]){
     return -1;
 }
 
+int howManyFigures(char figurePlacement[]){
+    int count = 0;
+    for (int i = 0; i < 64; i++){
+        if (figurePlacement[i] != 'E') count++;
+    }
+    return count;
+}
+
 void resetLegalMoveTables(int transitionalLegalMoveTab[], int finalLegalMoveTab[]){
     for (int i = 0; i < 484; i++){
         transitionalLegalMoveTab[i] = 0;

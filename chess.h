@@ -70,6 +70,7 @@ extern const int clock_time;
 extern guint timer_id;
 //AI
 extern bool AI_on;
+extern int DEPTH;
 
 void eventHandler(GtkWidget* clickedTile, gpointer data);
 void startingChessLayout();
@@ -78,6 +79,7 @@ char getFigureType(int tileIndex, char figurePlacement[]);
 char getFigureSide(int tileIndex, char figurePlacement[]);
 bool isEnemy(int selectedTileIndex, int possibleEnemyIndex, char figurePlacement[]);
 int kingIndex(char side, char figurePlacement[]);
+int howManyFigures(char figurePlacement[]);
 void resetLegalMoveTables(int transitionalLegalMoveTab[], int finalLegalMoveTab[]);
 void moveFigureToTile(int selectedTileIndex, int actionTileIndex, int legalMoveTable[], char figurePlacement[]);
 void setLegalMoves(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalMoveTab[], char figurePlacement[]);

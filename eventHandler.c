@@ -76,6 +76,8 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
         gtk_test_widget_wait_for_draw(boardGrid);
         if(roundCounter%2 && !gameOver){
             for(int i = 0; i < 5; i++) gtk_test_widget_wait_for_draw(boardGrid);
+//            if (howManyFigures(globalFigurePlacement) <= 8) DEPTH = 6;
+//            if (howManyFigures(globalFigurePlacement) <= 16) DEPTH = 5;
             double x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
         }
     }

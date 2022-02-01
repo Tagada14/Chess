@@ -3,7 +3,7 @@
 #include "chess.h"
 
 bool AI_on = false;
-
+int DEPTH = 4;
 
 void loadBools(){
     gameOver = lastTurnBoardConfiguration.gameOver;
@@ -153,7 +153,7 @@ double kingBlackWages[8][8] = {
 };
 
 double pawnWhiteWages[8][8] = {
-    {7.0,  7.0,  7.0,  7.0,  7.0,  7.0,  7.0,  7.0},
+    {50.0,  50.0,  50.0,  50.0,  50.0,  50.0,  50.0,  50.0},
     {5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0},
     {1.0,  1.0,  2.0,  3.0,  3.0,  2.0,  1.0,  1.0},
     {0.5,  0.5,  1.0,  2.5,  2.5,  1.0,  0.5,  0.5},
@@ -170,25 +170,25 @@ double pawnBlackWages[8][8] = {
     {0.5,  0.5,  1.0,  2.5,  2.5,  1.0,  0.5,  0.5},
     {1.0,  1.0,  2.0,  3.0,  3.0,  2.0,  1.0,  1.0},
     {5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0},
-    {7.0,  7.0,  7.0,  7.0,  7.0,  7.0,  7.0,  7.0}
+    {50.0,  50.0,  50.0,  50.0,  50.0,  50.0,  50.0,  50.0}
 };
 int wages[120] = {0};
 void wagesUpdate(){
-    wages[80] = -10;
-    wages[83] = -20;
-    wages[66] = -30;
-    wages[82] = -50;
-    wages[81] = -90;
-    wages[75] = -300;
+    wages[80] = -20;
+    wages[83] = -40;
+    wages[66] = -60;
+    wages[82] = -100;
+    wages[81] = -180;
+    wages[75] = -600;
 
     wages[69] = 0;
 
-    wages[112] = 10;
-    wages[115] = 20;
-    wages[98] = 30;
-    wages[114] = 50;
-    wages[113] = 90;
-    wages[107] = 300;
+    wages[112] = 20;
+    wages[115] = 40;
+    wages[98] = 60;
+    wages[114] = 100;
+    wages[113] = 180;
+    wages[107] = 600;
     for(int i = 0; i < 64; i++) tileWages[113][i/8][i%8] = queenWages[i/8][i%8];
     for(int i = 0; i < 64; i++) tileWages[81][i/8][i%8] = queenWages[i/8][i%8];
     for(int i = 0; i < 64; i++) tileWages[80][i/8][i%8] = pawnWhiteWages[i/8][i%8];
@@ -212,22 +212,22 @@ double evaluateBoard(char board[]){
     }
     return res;
 }
-double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, double alfa, double beta){
+double minmax(int depth, char board[], int fromTile, int whereTile, int fromWhereLegalmoveTab, double alfa, double beta){
     char tempFigurePlacement[64];
     int tempLegalMoveTab[64] = {0};
     int tempTransitionalLegalMoveTab[484] = {0};
     for(int i = 0; i < 64; i++) tempFigurePlacement[i] = board[i];
-    if(deepth != 0){
+    if(depth != 0){
         tempLegalMoveTab[whereTile]=fromWhereLegalmoveTab;
         moveFigureLogic(fromTile,whereTile,tempLegalMoveTab,tempFigurePlacement);
     }
-    if(deepth == 4)
+    if(depth == DEPTH)
         return evaluateBoard(tempFigurePlacement);
     int indexWhere = 0;
     int indexFrom = 0;
-    if(deepth%2 == 0){
+    if(depth%2 == 0){
         double best = (double)INT_MIN;
-        if(deepth != 0)
+        if(depth != 0)
             roundCounter++;
         for(int i = 0; i < 64; i++){
             if(getFigureSide(i, tempFigurePlacement) == 'B'){
@@ -237,8 +237,8 @@ double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhe
                 checkMoveCheckLegality(i, tempLegalMoveTab, tempFigurePlacement);
                 for(int j = 0; j < 64; j++){
                     if(tempLegalMoveTab[j] != 0){
-                            double val = minmax(deepth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] ,alfa, beta);
-//                            if (deepth == 0) printf("%d %d %fl\n",i,j,val);
+                            double val = minmax(depth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] ,alfa, beta);
+//                            if (depth == 0) printf("%d %d %fl\n",i,j,val);
                             if(val >= best){
                                 best = val;
                                 indexWhere = j;
@@ -254,7 +254,7 @@ double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhe
                 }
             }
         }
-            if(deepth != 0){
+            if(depth != 0){
                 roundCounter--;
                 return best;
             }
@@ -269,7 +269,7 @@ double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhe
                     checkMoveCheckLegality(i, tempLegalMoveTab, tempFigurePlacement);
                     for(int j = 0; j < 64; j++){
                         if(tempLegalMoveTab[j] != 0){
-                            double val = minmax(deepth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] , alfa, beta);
+                            double val = minmax(depth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] , alfa, beta);
                                 if(val <= best){
                                     best = val;
                                     indexWhere = j;
@@ -284,12 +284,12 @@ double minmax(int deepth, char board[], int fromTile, int whereTile, int fromWhe
                     }
                 }
             }
-            if(deepth != 0){
+            if(depth != 0){
                 roundCounter--;
                 return best;
             }
         }
-    if(deepth == 0){
+    if(depth == 0){
         resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
         setLegalMoves(indexFrom, globalFinalLegalMoveTab, globalTransitionalLegalMoveTab, globalFigurePlacement);
         checkMoveCheckLegality(indexFrom, globalFinalLegalMoveTab, globalFigurePlacement);
