@@ -26,6 +26,8 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
            globalFinalLegalMoveTab[actionClickedTileIndex] != 0){
             saveCurrentConfiguration();
             moveFigureLogic(UISelectedTile, actionClickedTileIndex, globalFinalLegalMoveTab, globalFigurePlacement);
+            iFrom = UISelectedTile;
+            iWhere = actionClickedTileIndex;
             lastMoveOrigin = UISelectedTile;
             roundCounter++;
             //Check if it's game over

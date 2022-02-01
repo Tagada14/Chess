@@ -3,8 +3,7 @@
 #include "chess.h"
 
 bool AI_on = false;
-int iFrom = -1;
-int iWhere = -1;
+
 
 void loadBools(){
     gameOver = lastTurnBoardConfiguration.gameOver;

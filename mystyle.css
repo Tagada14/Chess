@@ -24,8 +24,9 @@ button {
     border-color: black;
     border-width: 2px;
 }
-#AIMOVE{
-    background-color: red;
+
+#lastMoveDark{
+    background-color: #abbd6d;
     border-style: solid;
     border-color: black;
     border-width: 2px;

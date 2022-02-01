@@ -52,9 +52,21 @@ void drawLegalMoves(GtkWidget* boardGrid, int legalMoveTab[]){
 
 void drawLastMove(GtkWidget* boardGrid){
     GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(boardGrid), tabGrid[iFrom].posX, tabGrid[iFrom].posY);
-    gtk_widget_set_name(button, "AIMOVE");
+//    if (strcmp(gtk_widget_get_name(button),"bright") == 0)
+//        gtk_widget_set_name(button, "lastMoveBright");
+//    else gtk_widget_set_name(button, "lastMoveDark");
+    gtk_widget_set_name(button, "lastMoveDark");
     button = gtk_grid_get_child_at(GTK_GRID(boardGrid), tabGrid[iWhere].posX, tabGrid[iWhere].posY);
-    gtk_widget_set_name(button, "AIMOVE");
+//    if (strcmp(gtk_widget_get_name(button),"bright") == 0)
+//        gtk_widget_set_name(button, "lastMoveBright");
+//    else gtk_widget_set_name(button, "lastMoveDark");
+    gtk_widget_set_name(button, "lastMoveDark");
+//    #lastMoveBright{
+//    background-color: #e4f1b6;
+//    border-style: solid;
+//    border-color: black;
+//    border-width: 2px;
+//}
 }
 
 void myCSS(void){
@@ -95,13 +107,14 @@ void KGdrawVisitedTiles(GtkWidget* grid, char figurePlacement[]){
 void drawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){
     resetBoardColors(grid);
     changeTurnLabel(label);
+    if(iFrom >= 0 && iWhere >= 0)
+        drawLastMove(grid);
     if (UISelectedTile != -1){
         drawLegalMoves(grid, legalMoveTab);
     }
 //    gtk_test_widget_wait_for_draw(grid);
     drawBoard(grid, figurePlacement);
-    if(iFrom >= 0 && iWhere >= 0)
-        drawLastMove(grid);
+
 }
 
 void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){

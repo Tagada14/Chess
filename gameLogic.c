@@ -2,6 +2,8 @@
 
 // UI state
 int UISelectedTile = -1;
+int iFrom = -1;
+int iWhere = -1;
 
 // Game state
 char globalFigurePlacement[64];
