@@ -237,7 +237,7 @@ double minmax(int depth, char board[], int fromTile, int whereTile, int fromWher
                 checkMoveCheckLegality(i, tempLegalMoveTab, tempFigurePlacement);
                 for(int j = 0; j < 64; j++){
                     if(tempLegalMoveTab[j] != 0){
-                            double val = minmax(depth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j] ,alfa, beta);
+                            double val = minmax(depth+1, tempFigurePlacement, i, j, tempLegalMoveTab[j], alfa, beta);
 //                            if (depth == 0) printf("%d %d %fl\n",i,j,val);
                             if(val >= best){
                                 best = val;
