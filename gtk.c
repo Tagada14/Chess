@@ -10,6 +10,8 @@ GtkWidget* creditsWindow = NULL;
 GtkWidget* knightGameWindow = NULL;
 GtkWidget* chessBoardGrid;
 GtkWidget* knightGameChessBoardGrid;
+GtkWidget* KGplayAgainButton;
+GtkWidget* KGgameOverLabel;
 const int clock_time = 15;
 int sec_expired;
 int sec_expired_white;
@@ -108,8 +110,12 @@ void createKnightMGWindow(){
     gtk_container_set_border_width(GTK_CONTAINER(knightGameWindow), 10);
 
     g_signal_connect(G_OBJECT(knightGameWindow), "destroy",G_CALLBACK(gtk_main_quit), NULL);
-    GtkWidget* knightGameBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_container_add(GTK_CONTAINER(knightGameWindow), knightGameBox);
+    GtkWidget* mainBox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    GtkWidget* knightGameBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_container_add(GTK_CONTAINER(knightGameWindow), mainBox);
+    GtkWidget* buttonBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_container_add(GTK_CONTAINER(mainBox), buttonBox);
+    gtk_container_add(GTK_CONTAINER(mainBox), knightGameBox);
     knightGameChessBoardGrid = gtk_grid_new();
     GtkWidget* button;
     for(int i = 0; i < 64; i++) {
@@ -121,6 +127,24 @@ void createKnightMGWindow(){
         gtk_grid_attach(GTK_GRID(knightGameChessBoardGrid), button, tabGrid[i].posX, tabGrid[i].posY, tabGrid[i].lenX, tabGrid[i].lenY);
     }
     gtk_box_pack_start(GTK_BOX(knightGameBox), knightGameChessBoardGrid, TRUE, TRUE, 0);
+
+    KGgameOverLabel = gtk_label_new("");
+    gtk_box_pack_start(GTK_BOX(buttonBox), KGgameOverLabel, FALSE, FALSE, 0);
+
+    KGplayAgainButton = gtk_button_new_with_label("Play again");
+    g_signal_connect(G_OBJECT(KGplayAgainButton), "clicked",G_CALLBACK(KGplayAgain), NULL);
+    gtk_widget_set_name(KGplayAgainButton, "standardButton");
+    gtk_box_pack_start(GTK_BOX(buttonBox), KGplayAgainButton, TRUE, FALSE, 0);
+
+    button = gtk_button_new_with_label("Quit");
+    g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(exitWithButton), NULL);
+    gtk_widget_set_name(button, "standardButton");
+    gtk_box_pack_end(GTK_BOX(buttonBox), button, FALSE, FALSE, 0);
+
+    button = gtk_button_new_with_label("Return to Menu");
+    g_signal_connect(G_OBJECT(button), "clicked",G_CALLBACK(returnToMenu), NULL);
+    gtk_widget_set_name(button, "standardButton");
+    gtk_box_pack_end(GTK_BOX(buttonBox), button, FALSE, FALSE, 0);
 }
 
 gboolean timer_update(gpointer data)

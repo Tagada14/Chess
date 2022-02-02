@@ -10,6 +10,37 @@ char KGg_FigurePlacement[64];
 int KGglobalTransitionalLegalMoveTab[144];
 int KGglobalFinalLegalMoveTab[64];
 
+void KGresetGameState(){
+    KGGameOver = false;
+    KGGameWon = false;
+}
+
+void KGresetUIState(){
+    KGUISelectedTile = -1;
+}
+
+void KGLoadingSequence(){
+    startingKnightLayout();
+    KGresetGameState();
+    KGresetUIState();
+    resetBoardColors(knightGameChessBoardGrid);
+    drawBoard(knightGameChessBoardGrid, KGg_FigurePlacement);
+    gtk_widget_hide(KGplayAgainButton);
+    gtk_widget_set_name(KGgameOverLabel,"");
+    gtk_label_set_label(GTK_LABEL(KGgameOverLabel),"");
+}
+
+void KGplayAgain(){
+    KGLoadingSequence();
+}
+
+void KGGameEnd(){
+    gtk_widget_set_name(KGgameOverLabel, "KGgameOverLabel");
+    if(KGGameWon) gtk_label_set_label(GTK_LABEL(KGgameOverLabel), "Congratulations!\nYou won!");
+    else gtk_label_set_label(GTK_LABEL(KGgameOverLabel), "Try again");
+    gtk_widget_show(KGplayAgainButton);
+}
+
 void startingKnightLayout(){
     for (int i = 0; i < 64; i++){
         KGg_FigurePlacement[i] = 'E'; // E - Empty
@@ -82,18 +113,18 @@ void KGIsGameOver(){
     }
 }
 
-void displayEngGameMessage(bool didWin){
-    GtkWidget* dialog;
-    if(didWin){
-        printf("Congratulations, You've won!");
-        dialog = gtk_message_dialog_new(GTK_WINDOW(knightGameWindow),GTK_DIALOG_DESTROY_WITH_PARENT,GTK_MESSAGE_QUESTION,GTK_BUTTONS_YES_NO,"%s", "Congratulations! You've Won!");
-
-    }
-    else{
-        printf("Game Over");
-            dialog = gtk_message_dialog_new(GTK_WINDOW(knightGameWindow),GTK_DIALOG_DESTROY_WITH_PARENT,GTK_MESSAGE_INFO,GTK_BUTTONS_NONE,"%s", "Maybe next time.");
-    }
-    gtk_widget_set_size_request(dialog,300,50);
-    gtk_dialog_run(GTK_DIALOG(dialog));
-//    gtk_widget_destroy(dialog);
-}
+//void displayEngGameMessage(bool didWin){
+//    GtkWidget* dialog;
+//    if(didWin){
+//        printf("Congratulations, You've won!");
+//        dialog = gtk_message_dialog_new(GTK_WINDOW(knightGameWindow),GTK_DIALOG_DESTROY_WITH_PARENT,GTK_MESSAGE_QUESTION,GTK_BUTTONS_YES_NO,"%s", "Congratulations! You've Won!");
+//
+//    }
+//    else{
+//        printf("Game Over");
+//            dialog = gtk_message_dialog_new(GTK_WINDOW(knightGameWindow),GTK_DIALOG_DESTROY_WITH_PARENT,GTK_MESSAGE_INFO,GTK_BUTTONS_NONE,"%s", "Maybe next time.");
+//    }
+//    gtk_widget_set_size_request(dialog,300,50);
+//    gtk_dialog_run(GTK_DIALOG(dialog));
+////    gtk_widget_destroy(dialog);
+//}

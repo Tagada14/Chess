@@ -117,9 +117,7 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
         createKnightMGWindow();
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(knightGameWindow);
-        startingKnightLayout();
-        resetBoardColors(knightGameChessBoardGrid);
-        drawBoard(knightGameChessBoardGrid, KGg_FigurePlacement);
+        KGLoadingSequence();
     }
     else if (menuTileIndex == 4){
         createCreditsWindow();
@@ -149,6 +147,9 @@ void knightGameEventHandler (GtkWidget* clickedTile, gpointer data){
             //Check if it's game over
             KGResetLegalMoveTables(KGglobalTransitionalLegalMoveTab, KGglobalFinalLegalMoveTab);
             KGIsGameOver();
+            if(KGGameOver){
+                KGGameEnd();
+            }
         }
     }
     //Change the UI state based on action
@@ -168,7 +169,7 @@ void knightGameEventHandler (GtkWidget* clickedTile, gpointer data){
     //Draw the UI
     KGdrawUI(boardGrid, KGg_FigurePlacement, KGglobalFinalLegalMoveTab);
 //    displayEngGameMessage(true);
-    if(KGGameOver) displayEngGameMessage(KGGameWon);
+//    if(KGGameOver) displayEngGameMessage(KGGameWon);
 }
 
 void reverseLastMove(GtkWidget* menuButton, gpointer data){

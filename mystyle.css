@@ -145,3 +145,11 @@ button {
         color: black;
     }
 }
+
+#KGgameOverLabel{
+    font-size: 30px;
+    color: #022026;
+    border-width: 2px;
+    border-color: black;
+    padding: 10px;
+}
