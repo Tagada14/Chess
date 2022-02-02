@@ -20,6 +20,7 @@ bool rightWhiteRookDidNotMove = true;
 
 int globalTransitionalLegalMoveTab[484]; // actual 8x8 table is from 160 to 224
 int globalFinalLegalMoveTab[64];
+int gameResult = -1;
 
 struct boardConfiguration lastTurnBoardConfiguration;
 // PAWN -> P, BISHOP-> B, ROOK -> R, KNIGHT -> S, QUEEN -> Q, KING -> K
@@ -507,21 +508,16 @@ void isGameOver(){
                 }
             }
         }
-    if(!flagMoves){
-        if (timer_id != 0){
-            g_source_remove(timer_id);
-            timer_id = 0;
-        }
-    }
     if(flagCheck && !flagMoves){
-        printf("Game Over\n");
-        if (whoseTurn() == 'W') printf("Black wins\n");
-        else if (whoseTurn() == 'B') printf ("White wins\n");
+//        printf("Game Over\n");
+        if (whoseTurn() == 'W') gameResult = 2;
+        else if (whoseTurn() == 'B') gameResult = 1;
         gameOver = true;
     }
     else if (!flagCheck && !flagMoves){
-        printf("Game Over\n");
-        printf("It's a tie!\n");
+//        printf("Game Over\n");
+//        printf("It's a tie!\n");
+        gameResult = 3;
     }
 }
 

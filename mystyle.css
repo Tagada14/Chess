@@ -125,3 +125,23 @@ button {
     border-color: black;
     padding: 10px;
 }
+
+#gameOverLabel{
+    border: 2px solid black;
+    font-size: 25px;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%{
+        background-color: white;
+        color: black;
+    }
+    50%{
+        background-color: black;
+        color: white;
+    }
+    100%{
+        background-color: white;
+        color: black;
+    }
+}

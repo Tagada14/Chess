@@ -1,14 +1,16 @@
 #include "chess.h"
 
 GtkWidget* label;
+GtkWidget* gameOverLabel;
 GtkWidget* timer;
+GtkWidget* playAgainButton;
 GtkWidget* menuWindow;
 GtkWidget* chessGameWindow = NULL;
 GtkWidget* creditsWindow = NULL;
 GtkWidget* knightGameWindow = NULL;
 GtkWidget* chessBoardGrid;
 GtkWidget* knightGameChessBoardGrid;
-const int clock_time = 65;
+const int clock_time = 15;
 int sec_expired;
 int sec_expired_white;
 int sec_expired_black;
@@ -25,6 +27,31 @@ void returnToMenu(GtkWidget* button, gpointer data){
     GtkWidget* window = gtk_widget_get_toplevel(button);
     gtk_widget_show_all(menuWindow);
     gtk_widget_hide(window);
+}
+
+void chessGameOver(){
+    if (timer_id != 0){
+        g_source_remove(timer_id);
+        timer_id = 0;
+    }
+    gtk_widget_set_name(gameOverLabel, "gameOverLabel");
+    switch(gameResult){
+        case 1:
+            gtk_label_set_label(GTK_LABEL(gameOverLabel), "White's won!");
+            break;
+        case 2:
+            gtk_label_set_label(GTK_LABEL(gameOverLabel), "Black's won!");
+            break;
+        case 3:
+            gtk_label_set_label(GTK_LABEL(gameOverLabel), "It's a tie!");
+            break;
+        default:
+            printf("Error in funtion chessGameOver");
+            break;
+    }
+    resetUIState();
+    resetBoardColors(chessBoardGrid);
+    gtk_widget_show(playAgainButton);
 }
 
 void createCreditsWindow(){
@@ -98,6 +125,14 @@ void createKnightMGWindow(){
 
 gboolean timer_update(gpointer data)
 {
+    if(sec_expired <= 0){
+        gameOver = true;
+        if (whoseTurn() == 'W') gameResult = 2;
+        else if (whoseTurn() == 'B') gameResult = 1;
+        else printf("Error in function timer_update");
+        chessGameOver();
+        return false;
+    }
     GtkWidget* label = (GtkWidget*)data;
     char buf[256];
     memset(&buf, 0x0, 256);
@@ -146,7 +181,7 @@ void createChessGameWindow(){
     gtk_box_pack_start(GTK_BOX(box3), box1, FALSE, FALSE, 0);
 
     gtk_container_add(GTK_CONTAINER(chessGameWindow), box3);
-
+    GtkWidget *button;
 
     label = gtk_label_new("White's Turn");
     gtk_widget_set_name(label, "standardLabel");
@@ -156,6 +191,13 @@ void createChessGameWindow(){
     gtk_widget_set_name(timer, "Timer");
     gtk_box_pack_start(GTK_BOX(box2), timer, FALSE, FALSE, 0);
 
+    gameOverLabel = gtk_label_new("");
+    gtk_box_pack_start(GTK_BOX(box2), gameOverLabel, FALSE, FALSE, 0);
+
+    playAgainButton = gtk_button_new_with_label("Play again");
+    g_signal_connect(G_OBJECT(playAgainButton), "clicked",G_CALLBACK(playAgain), NULL);
+    gtk_widget_set_name(playAgainButton, "standardButton");
+    gtk_box_pack_start(GTK_BOX(box2), playAgainButton, TRUE, FALSE, 0);
 
     chessBoardGrid = gtk_grid_new();
 
@@ -166,7 +208,7 @@ void createChessGameWindow(){
 
     gtk_box_pack_start(GTK_BOX(box1), chessBoardGrid, TRUE, TRUE, 0);
 
-    GtkWidget *button;
+
     for(int i = 0; i < 64; i++) {
         tabGrid[i].index = i;
         button = gtk_button_new();

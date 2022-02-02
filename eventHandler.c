@@ -3,6 +3,7 @@
 bool start_clock = false;
 guint timer_id = 0;
 
+
 void chessGameLoadingSequence(){
     startingChessLayout();
     resetGameState();
@@ -14,7 +15,14 @@ void chessGameLoadingSequence(){
     resetBoardColors(chessBoardGrid);
     drawBoard(chessBoardGrid, globalFigurePlacement);
     changeTurnLabel(label);
+    gtk_widget_hide(playAgainButton);
+    gtk_widget_set_name(gameOverLabel,"");
+    gtk_label_set_label(GTK_LABEL(gameOverLabel),"");
     gtk_test_widget_wait_for_draw(chessBoardGrid);
+}
+
+void playAgain(){
+    chessGameLoadingSequence();
 }
 
 void eventHandler(GtkWidget* clickedTile, gpointer data){
@@ -45,6 +53,9 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
             //Check if it's game over
             resetLegalMoveTables(globalTransitionalLegalMoveTab, globalFinalLegalMoveTab);
             isGameOver();
+            if(gameOver){
+                chessGameOver();
+            }
         }
     }
     //Change the UI state based on action
