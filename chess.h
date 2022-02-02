@@ -136,4 +136,6 @@ void createKnightMGWindow();
 void createChessGameWindow();
 void set_timer(gpointer data);
 void chessGameOver();
+void initializeMenuGrid();
+void initializeMenuGrid();
 #endif  //_CHESS

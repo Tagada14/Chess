@@ -125,7 +125,6 @@ void drawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){
     }
 //    gtk_test_widget_wait_for_draw(grid);
     drawBoard(grid, figurePlacement);
-
 }
 
 void KGdrawUI(GtkWidget* grid, char figurePlacement[], int legalMoveTab[]){

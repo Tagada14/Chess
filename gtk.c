@@ -12,10 +12,30 @@ GtkWidget* chessBoardGrid;
 GtkWidget* knightGameChessBoardGrid;
 GtkWidget* KGplayAgainButton;
 GtkWidget* KGgameOverLabel;
-const int clock_time = 15;
+const int clock_time = 600;
 int sec_expired;
 int sec_expired_white;
 int sec_expired_black;
+
+void initializeMenuGrid(){
+    for (int i = 0; i < 6; i++){
+    menuGrid[i].posX = 0;
+    menuGrid[i].posY = i;
+    menuGrid[i].lenX = 1;
+    menuGrid[i].lenY = 1;
+    menuGrid[i].index = i;
+    }
+}
+
+void initializeTabGrid(){
+    for (int i = 0; i < 64; i++){
+    tabGrid[i].posX = i % 8;
+    tabGrid[i].posY = i / 8;
+    tabGrid[i].lenX = 1;
+    tabGrid[i].lenY = 1;
+    tabGrid[i].index = i;
+}
+}
 
 void exitWithButton( GtkWidget *widget, gpointer data) {
     gtk_main_quit();
