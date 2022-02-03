@@ -119,12 +119,12 @@ void menuHandler (GtkWidget* menuButton, gpointer data){
         gtk_widget_show_all(knightGameWindow);
         KGLoadingSequence();
     }
-    else if (menuTileIndex == 4){
+    else if (menuTileIndex == 3){
         createCreditsWindow();
         gtk_widget_hide(menuWindow);
         gtk_widget_show_all(creditsWindow);
     }
-    else if (menuTileIndex == 5){
+    else if (menuTileIndex == 4){
         gtk_main_quit();
     }
 }

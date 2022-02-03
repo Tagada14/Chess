@@ -18,7 +18,7 @@ int sec_expired_white;
 int sec_expired_black;
 
 void initializeMenuGrid(){
-    for (int i = 0; i < 6; i++){
+    for (int i = 0; i < 5; i++){
     menuGrid[i].posX = 0;
     menuGrid[i].posY = i;
     menuGrid[i].lenX = 1;
@@ -90,9 +90,9 @@ void createMenuWindow(){
     strcpy(menuGrid[0].name, "Singleplayer");
     strcpy(menuGrid[1].name, "Multiplayer");
     strcpy(menuGrid[2].name, "Knight Minigame");
-    strcpy(menuGrid[3].name, "Options");
-    strcpy(menuGrid[4].name, "Credits");
-    strcpy(menuGrid[5].name, "Quit");
+//    strcpy(menuGrid[3].name, "Options");
+    strcpy(menuGrid[3].name, "Credits");
+    strcpy(menuGrid[4].name, "Quit");
     menuWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(menuWindow),"GTK - Menu");
     gtk_window_set_position(GTK_WINDOW(menuWindow),GTK_WIN_POS_CENTER);
@@ -111,7 +111,7 @@ void createMenuWindow(){
 
     gtk_box_pack_start(GTK_BOX(box4), grid2, TRUE, TRUE, 0);
     GtkWidget* button2;
-    for(int i = 0; i < 6; i++) {
+    for(int i = 0; i < 5; i++) {
         menuGrid[i].index = i;
         button2 = gtk_button_new_with_label(menuGrid[i].name);
         gtk_widget_set_name(button2, "menuButton");
