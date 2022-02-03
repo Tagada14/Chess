@@ -87,8 +87,6 @@ void eventHandler(GtkWidget* clickedTile, gpointer data){
         gtk_test_widget_wait_for_draw(boardGrid);
         if(roundCounter%2 && !gameOver){
             for(int i = 0; i < 5; i++) gtk_test_widget_wait_for_draw(boardGrid);
-//            if (howManyFigures(globalFigurePlacement) <= 8) DEPTH = 6;
-//            if (howManyFigures(globalFigurePlacement) <= 16) DEPTH = 5;
             double x = minmax(0, globalFigurePlacement, 0, 0,0, (double)INT_MIN, (double)INT_MAX-1.0);
         }
     }
@@ -168,8 +166,77 @@ void knightGameEventHandler (GtkWidget* clickedTile, gpointer data){
         KGUISelectedTile = -1;
     //Draw the UI
     KGdrawUI(boardGrid, KGg_FigurePlacement, KGglobalFinalLegalMoveTab);
-//    displayEngGameMessage(true);
-//    if(KGGameOver) displayEngGameMessage(KGGameWon);
+}
+
+void saveCurrentConfiguration(){
+    lastTurnBoardConfiguration.gameOver = gameOver;
+    lastTurnBoardConfiguration.leftBlackRookDidNotMove = leftBlackRookDidNotMove;
+    lastTurnBoardConfiguration.leftWhiteRookDidNotMove = leftWhiteRookDidNotMove;
+    lastTurnBoardConfiguration.rightBlackRookDidNotMove = rightBlackRookDidNotMove;
+    lastTurnBoardConfiguration.rightWhiteRookDidNotMove = rightWhiteRookDidNotMove;
+    lastTurnBoardConfiguration.blackKingDidNotMove = blackKingDidNotMove;
+    lastTurnBoardConfiguration.whiteKingDidNotMove = whiteKingDidNotMove;
+    lastTurnBoardConfiguration.roundCounter = roundCounter;
+    lastTurnBoardConfiguration.lastMoveOrigin = lastMoveOrigin;
+    for (int i = 0; i < 64; i++){
+        lastTurnBoardConfiguration.figurePlacement[i] = globalFigurePlacement[i];
+    }
+}
+
+void loadConfiguration(){
+    gameOver = lastTurnBoardConfiguration.gameOver;
+    leftBlackRookDidNotMove = lastTurnBoardConfiguration.leftBlackRookDidNotMove ;
+    leftWhiteRookDidNotMove = lastTurnBoardConfiguration.leftWhiteRookDidNotMove;
+    rightBlackRookDidNotMove = lastTurnBoardConfiguration.rightBlackRookDidNotMove;
+    rightWhiteRookDidNotMove = lastTurnBoardConfiguration.rightWhiteRookDidNotMove;
+    blackKingDidNotMove = lastTurnBoardConfiguration.blackKingDidNotMove;
+    whiteKingDidNotMove = lastTurnBoardConfiguration.whiteKingDidNotMove;
+    roundCounter = lastTurnBoardConfiguration.roundCounter;
+    lastMoveOrigin = lastTurnBoardConfiguration.lastMoveOrigin;
+    for (int i = 0; i < 64; i++){
+       globalFigurePlacement[i] = lastTurnBoardConfiguration.figurePlacement[i];
+    }
+}
+
+void saveConfigurationToFile(){
+    char* fileName = malloc(sizeof(char)*28);
+    time_t secs = time(0);
+    struct tm *local = localtime(&secs);
+    sprintf(fileName, "save%02d-%02d-%d_%02d_%02d_%02d.chess",local->tm_mday,local->tm_mon +1, local->tm_year+1900, local->tm_hour, local->tm_min, local->tm_sec);
+    printf("%s\n", fileName);
+    FILE *file  = fopen(fileName, "w");
+     if (file == NULL){
+        printf("Error! Could not open file\n");
+        exit(-1);
+    }
+    fprintf(file, "%d %d %d %d %d %d\n",leftBlackRookDidNotMove, rightBlackRookDidNotMove, leftWhiteRookDidNotMove, rightWhiteRookDidNotMove, blackKingDidNotMove, whiteKingDidNotMove);
+    fprintf(file, "%d %d\n", roundCounter, lastMoveOrigin);
+    for(int i = 0; i < 64; i++){
+        putc(globalFigurePlacement[i], file);
+        if ((i+1)%8 == 0) putc('\n', file);
+    }
+    fflush(file);
+    free(fileName);
+    int fclose(FILE *file);
+}
+
+void loadConfigurationFromFile(char* filename){
+        FILE *file  = fopen(filename, "r");
+     if (file == NULL){
+        printf("Error! Could not open file\n");
+        exit(-1);
+    }
+    int temp1,temp2,temp3,temp4,temp5,temp6;
+    fscanf(file, "%d %d %d %d %d %d\n", &temp1, &temp2, &temp3, &temp4, &temp5, &temp6);
+    leftBlackRookDidNotMove = temp1; rightBlackRookDidNotMove = temp2; leftWhiteRookDidNotMove = temp3; rightWhiteRookDidNotMove = temp4;
+    blackKingDidNotMove = temp5; whiteKingDidNotMove = temp6;
+    fscanf(file, "%d %d\n", &temp1, &temp2);
+    roundCounter = temp1; lastMoveOrigin = temp2;
+    for(int i = 0; i < 64; i++){
+        globalFigurePlacement[i] = getc(file);
+        if ((i+1)%8 == 0) getc(file);
+    }
+    int fclose(FILE *file);
 }
 
 void reverseLastMove(GtkWidget* menuButton, gpointer data){

@@ -422,7 +422,7 @@ void knight(int selectedTileIndex, int transitionalLegalMoveTab[]){
 }
 
 void setLegalMoves(int selectedTileIndex, int finalLegalMoveTab[], int transitionalLegalMoveTab[], char figurePlacement[]){
-    /* in transitionalLegalMoveTab 0 - can't move there, 1 - can move if there is no enemy figure, 2 - can move there if there is enemy figure,
+    /* in transitionalLegalMoveTab 0 - can't move there, 1 - can move if there is no enemy figure on the tile, 2 - can move there if there is enemy figure on the tile,
     3 - can move there regardless if the tile is empty or occupied by the enemy
     in finalLegalMoveTab 0 - can't move there, 1 - can move there and there is no enemy figure there, 2 - can move there and kill enemy figure
     */
@@ -509,85 +509,14 @@ void isGameOver(){
             }
         }
     if(flagCheck && !flagMoves){
-//        printf("Game Over\n");
-        if (whoseTurn() == 'W') gameResult = 2;
-        else if (whoseTurn() == 'B') gameResult = 1;
+        if (whoseTurn() == 'W') gameResult = 2; // Black Wins
+        else if (whoseTurn() == 'B') gameResult = 1; // White Wins
         gameOver = true;
     }
     else if (!flagCheck && !flagMoves){
-//        printf("Game Over\n");
-//        printf("It's a tie!\n");
-        gameResult = 3;
+        gameOver = true;
+        gameResult = 3; // Tie
     }
 }
 
-void saveCurrentConfiguration(){
-    lastTurnBoardConfiguration.gameOver = gameOver;
-    lastTurnBoardConfiguration.leftBlackRookDidNotMove = leftBlackRookDidNotMove;
-    lastTurnBoardConfiguration.leftWhiteRookDidNotMove = leftWhiteRookDidNotMove;
-    lastTurnBoardConfiguration.rightBlackRookDidNotMove = rightBlackRookDidNotMove;
-    lastTurnBoardConfiguration.rightWhiteRookDidNotMove = rightWhiteRookDidNotMove;
-    lastTurnBoardConfiguration.blackKingDidNotMove = blackKingDidNotMove;
-    lastTurnBoardConfiguration.whiteKingDidNotMove = whiteKingDidNotMove;
-    lastTurnBoardConfiguration.roundCounter = roundCounter;
-    lastTurnBoardConfiguration.lastMoveOrigin = lastMoveOrigin;
-    for (int i = 0; i < 64; i++){
-        lastTurnBoardConfiguration.figurePlacement[i] = globalFigurePlacement[i];
-    }
-}
 
-void loadConfiguration(){
-    gameOver = lastTurnBoardConfiguration.gameOver;
-    leftBlackRookDidNotMove = lastTurnBoardConfiguration.leftBlackRookDidNotMove ;
-    leftWhiteRookDidNotMove = lastTurnBoardConfiguration.leftWhiteRookDidNotMove;
-    rightBlackRookDidNotMove = lastTurnBoardConfiguration.rightBlackRookDidNotMove;
-    rightWhiteRookDidNotMove = lastTurnBoardConfiguration.rightWhiteRookDidNotMove;
-    blackKingDidNotMove = lastTurnBoardConfiguration.blackKingDidNotMove;
-    whiteKingDidNotMove = lastTurnBoardConfiguration.whiteKingDidNotMove;
-    roundCounter = lastTurnBoardConfiguration.roundCounter;
-    lastMoveOrigin = lastTurnBoardConfiguration.lastMoveOrigin;
-    for (int i = 0; i < 64; i++){
-       globalFigurePlacement[i] = lastTurnBoardConfiguration.figurePlacement[i];
-    }
-}
-
-void saveConfigurationToFile(){
-    char* fileName = malloc(sizeof(char)*28);
-    time_t secs = time(0);
-    struct tm *local = localtime(&secs);
-    sprintf(fileName, "save%02d-%02d-%d_%02d_%02d_%02d.chess",local->tm_mday,local->tm_mon +1, local->tm_year+1900, local->tm_hour, local->tm_min, local->tm_sec);
-    printf("%s\n", fileName);
-    FILE *file  = fopen(fileName, "w");
-     if (file == NULL){
-        printf("Error! Could not open file\n");
-        exit(-1);
-    }
-    fprintf(file, "%d %d %d %d %d %d\n",leftBlackRookDidNotMove, rightBlackRookDidNotMove, leftWhiteRookDidNotMove, rightWhiteRookDidNotMove, blackKingDidNotMove, whiteKingDidNotMove);
-    fprintf(file, "%d %d\n", roundCounter, lastMoveOrigin);
-    for(int i = 0; i < 64; i++){
-        putc(globalFigurePlacement[i], file);
-        if ((i+1)%8 == 0) putc('\n', file);
-    }
-    fflush(file);
-    free(fileName);
-    int fclose(FILE *file);
-}
-
-void loadConfigurationFromFile(char* filename){
-        FILE *file  = fopen(filename, "r");
-     if (file == NULL){
-        printf("Error! Could not open file\n");
-        exit(-1);
-    }
-    int temp1,temp2,temp3,temp4,temp5,temp6;
-    fscanf(file, "%d %d %d %d %d %d\n", &temp1, &temp2, &temp3, &temp4, &temp5, &temp6);
-    leftBlackRookDidNotMove = temp1; rightBlackRookDidNotMove = temp2; leftWhiteRookDidNotMove = temp3; rightWhiteRookDidNotMove = temp4;
-    blackKingDidNotMove = temp5; whiteKingDidNotMove = temp6;
-    fscanf(file, "%d %d\n", &temp1, &temp2);
-    roundCounter = temp1; lastMoveOrigin = temp2;
-    for(int i = 0; i < 64; i++){
-        globalFigurePlacement[i] = getc(file);
-        if ((i+1)%8 == 0) getc(file);
-    }
-    int fclose(FILE *file);
-}

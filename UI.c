@@ -52,21 +52,9 @@ void drawLegalMoves(GtkWidget* boardGrid, int legalMoveTab[]){
 
 void drawLastMove(GtkWidget* boardGrid){
     GtkWidget* button = gtk_grid_get_child_at(GTK_GRID(boardGrid), tabGrid[iFrom].posX, tabGrid[iFrom].posY);
-//    if (strcmp(gtk_widget_get_name(button),"bright") == 0)
-//        gtk_widget_set_name(button, "lastMoveBright");
-//    else gtk_widget_set_name(button, "lastMoveDark");
     gtk_widget_set_name(button, "lastMoveDark");
     button = gtk_grid_get_child_at(GTK_GRID(boardGrid), tabGrid[iWhere].posX, tabGrid[iWhere].posY);
-//    if (strcmp(gtk_widget_get_name(button),"bright") == 0)
-//        gtk_widget_set_name(button, "lastMoveBright");
-//    else gtk_widget_set_name(button, "lastMoveDark");
     gtk_widget_set_name(button, "lastMoveDark");
-//    #lastMoveBright{
-//    background-color: #e4f1b6;
-//    border-style: solid;
-//    border-color: black;
-//    border-width: 2px;
-//}
 }
 
 void myCSS(void){
