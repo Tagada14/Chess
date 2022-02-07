@@ -137,5 +137,5 @@ void createChessGameWindow();
 void set_timer(gpointer data);
 void chessGameOver();
 void initializeMenuGrid();
-void initializeMenuGrid();
+void initializeTabGrid();
 #endif  //_CHESS
