@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <math.h>
+#include <limits.h>
 
 struct GTKmainGrid {
 int posX,lenX,posY,lenY,index;

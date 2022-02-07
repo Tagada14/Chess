@@ -34,7 +34,7 @@ void initializeTabGrid(){
     tabGrid[i].lenX = 1;
     tabGrid[i].lenY = 1;
     tabGrid[i].index = i;
-}
+    }
 }
 
 void exitWithButton( GtkWidget *widget, gpointer data) {
@@ -251,7 +251,6 @@ void createChessGameWindow(){
     gtk_grid_set_column_homogeneous(GTK_GRID(chessBoardGrid), TRUE);
 
     gtk_box_pack_start(GTK_BOX(box1), chessBoardGrid, TRUE, TRUE, 0);
-
 
     for(int i = 0; i < 64; i++) {
         tabGrid[i].index = i;
